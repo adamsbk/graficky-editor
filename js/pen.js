@@ -1,0 +1,3 @@
+var Pen = new function() {
+	
+};
