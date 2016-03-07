@@ -7,14 +7,19 @@
 	
 	canvas{
 	    background-color: #fff;
+	    cursor: crosshair;
 	}
     </style>
 </head>
 <body>
     <canvas id="editor" width="1024" height="640"></canvas>
-    <button class="tool" id="pen" data-tool="pen">Pero</button>
+    <div>
+    	<button class="tool" id="pen" data-tool="pen">Pero</button>
+    	<a href="#" id="download">Download as image</a>
+    </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/pen.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
 </body>
 </html>

@@ -15,29 +15,50 @@ var Canvas = new function () {
     var tools = {pen: new Pen(this.ctx)};
 
     this.initialize = function () {
-	this.selectedTool =
-		this.canvas.mousedown(function (e) {
-		    var rect = self.canvas.getBoundingClientRect();
-		    e.calcX = e.clientX - rect.left;
-		    e.calcY = e.clientY - rect.top;
-		    this.selectedTool.dragStart(e);
-		}).mousemove(function (e) {
+	this.selectedTool = tools['pen'];
+
+	var dragStart = false;
+	$(this.canvas).mousedown(function (e) {
+		dragStart = true;
+	    var rect = self.canvas.getBoundingClientRect();
+		e.calcX = e.clientX - rect.left;
+	    e.calcY = e.clientY - rect.top;
+	    if (self.selectedTool.hasOwnProperty('dragStart')) {
+	    	self.selectedTool.dragStart(e);
+	    }
+	}).mousemove(function (e) {
 	    var rect = self.canvas.getBoundingClientRect();
 	    e.calcX = e.clientX - rect.left;
 	    e.calcY = e.clientY - rect.top;
-	    this.selectedTool.drag(e);
+	    if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
+	    	self.selectedTool.drag(e);
+	    }
 	}).mouseup(function (e) {
+		dragStart = false;
 	    var rect = self.canvas.getBoundingClientRect();
 	    e.calcX = e.clientX - rect.left;
 	    e.calcY = e.clientY - rect.top;
-	    this.selectedTool.dragend(e);
+	    if (self.selectedTool.hasOwnProperty('dragend')) {
+	    	self.selectedTool.dragend(e);
+	    }
 	});
 	$(".tool").click(function (e) {
-	    $anchor = $this;
-	    this.selectedTool = tools[$(this).data("tool")];
-	    this.selectedTool.switch();
+	    self.selectedTool = tools[$(this).data("tool")];
+	    if (self.selectedTool.hasOwnProperty('switch')) {
+	    	self.selectedTool.switch();
+	    }
 	});
     }
 };
 
 Canvas.initialize();
+
+function downloadCanvas(link, canvasId, filename) {
+	link.href = $(CONFIG.canvas_selector)[0].toDataURL();
+	link.download = filename;
+}
+
+$('#download').click(function() {
+	downloadCanvas(this, 'canvas', 'obrazok.png');
+})
+
