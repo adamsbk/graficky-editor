@@ -5,14 +5,21 @@
 	    background-color: #ddd;
 	}
 	
+	.canvas-wrap {
+		text-align: center;
+	}
+
 	canvas{
 	    background-color: #fff;
 	    cursor: crosshair;
+	    margin: 12px auto;
 	}
     </style>
 </head>
 <body>
-    <canvas id="editor" width="1024" height="640"></canvas>
+    <div class="canvas-wrap">
+    	<canvas id="editor" width="1024" height="640"></canvas>
+    </div>
     <div>
     	<button class="tool" id="pen" data-tool="pen">Pero</button>
     	<a href="#" id="download">Download as image</a>

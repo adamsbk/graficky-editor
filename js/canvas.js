@@ -16,6 +16,7 @@ var Canvas = new function () {
 
     this.initialize = function () {
 	this.selectedTool = tools['pen'];
+	self.selectedTool.switch();
 
 	var dragStart = false;
 	$(this.canvas).mousedown(function (e) {
