@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
     <style>
 	body{
 	    background-color: #ddd;
@@ -14,6 +17,9 @@
 	    cursor: crosshair;
 	    margin: 12px auto;
 	}
+	#slider {
+		width: 230px;
+	}
     </style>
 </head>
 <body>
@@ -22,10 +28,14 @@
     </div>
     <div>
     	<button class="tool" id="pen" data-tool="pen">Pero</button>
+    	<div id="slider"></div>
+    	<input type="text" id="colorpicker" />
     	<a href="#" id="download">Download as image</a>
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
     <script type="text/javascript" src="js/pen.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
 </body>

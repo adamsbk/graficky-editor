@@ -18,29 +18,41 @@ var Canvas = new function () {
 	this.selectedTool = tools['pen'];
 	self.selectedTool.switch();
 
+	var addPosToEventObj = function(e) {
+		var rect = self.canvas.getBoundingClientRect();
+		e.calcX = e.clientX - rect.left;
+	    e.calcY = e.clientY - rect.top;
+	};
+
+	this.sliderChanged = function(value) {
+		if (self.selectedTool.hasOwnProperty('sliderChanged')) {
+	    	self.selectedTool.sliderChanged(value);
+	    }
+	};
+
+	this.colorChanged = function(color) {
+		if (self.selectedTool.hasOwnProperty('colorChanged')) {
+	    	self.selectedTool.colorChanged(color);
+	    }
+	}
+
 	var dragStart = false;
 	$(this.canvas).mousedown(function (e) {
 		dragStart = true;
-	    var rect = self.canvas.getBoundingClientRect();
-		e.calcX = e.clientX - rect.left;
-	    e.calcY = e.clientY - rect.top;
+	    addPosToEventObj(e);
 	    if (self.selectedTool.hasOwnProperty('dragStart')) {
 	    	self.selectedTool.dragStart(e);
 	    }
 	}).mousemove(function (e) {
-	    var rect = self.canvas.getBoundingClientRect();
-	    e.calcX = e.clientX - rect.left;
-	    e.calcY = e.clientY - rect.top;
+	    addPosToEventObj(e);
 	    if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
 	    	self.selectedTool.drag(e);
 	    }
 	}).mouseup(function (e) {
 		dragStart = false;
-	    var rect = self.canvas.getBoundingClientRect();
-	    e.calcX = e.clientX - rect.left;
-	    e.calcY = e.clientY - rect.top;
-	    if (self.selectedTool.hasOwnProperty('dragend')) {
-	    	self.selectedTool.dragend(e);
+	    addPosToEventObj(e);
+	    if (self.selectedTool.hasOwnProperty('dragEnd')) {
+	    	self.selectedTool.dragEnd(e);
 	    }
 	});
 	$(".tool").click(function (e) {
@@ -62,4 +74,28 @@ function downloadCanvas(link, canvasId, filename) {
 $('#download').click(function() {
 	downloadCanvas(this, 'canvas', 'obrazok.png');
 })
+
+$(function() {
+	$( "#slider" ).slider({
+		min: 1,
+		max: 50,
+		value: 5,
+		change: function( event, ui ) {
+			Canvas.sliderChanged(ui.value);
+		}
+	});
+	//trigger slidechange
+	$('#slider').slider( 'value', $('#slider').slider('value') );
+
+	$("#colorpicker").spectrum({
+		color: '#FF0000',
+		preferredFormat: "hex",
+		showInput: true,
+		showPalette: true,
+		palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]],
+		move: function(color) {
+			Canvas.colorChanged(color.toRgbString());
+		}
+	});
+});
 
