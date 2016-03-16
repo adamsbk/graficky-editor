@@ -9,13 +9,21 @@
 	}
 	
 	.canvas-wrap {
-		text-align: center;
+		margin: 12px auto;
 	}
-
-	canvas{
-	    background-color: #fff;
+	.canvas-layers {
+		position: relative;
+		width: 1024px;
+		height: 640px;
+		margin-left: auto;
+		margin-right: auto;
+		background-color: #fff;
+	}
+	.canvas-wrap canvas{
+		position: absolute;
+	    left: 0;
+	    top: 0;
 	    cursor: crosshair;
-	    margin: 12px auto;
 	}
 	#slider {
 		width: 230px;
@@ -24,19 +32,29 @@
 </head>
 <body>
     <div class="canvas-wrap">
-    	<canvas id="editor" width="1024" height="640"></canvas>
+    	<div class="canvas-layers">
+    		<canvas id="editor" width="1024" height="640"></canvas>
+    		<canvas id="redrawer" width="1024" height="640"></canvas>
+    	</div>
     </div>
     <div>
     	<button class="tool" id="pen" data-tool="pen">Pero</button>
+    	<button class="tool" id="line" data-tool="line">Čiara</button>
+    	<button class="tool" id="star" data-tool="star">Hviezda</button>
     	<div id="slider"></div>
-    	<input type="text" id="colorpicker" />
+    	<input type="text" id="linecolorpicker" />
+    	<input type="text" id="fillcolorpicker" />
     	<a href="#" id="download">Download as image</a>
     </div>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script type="text/javascript" src="js/tool.js"></script>
     <script type="text/javascript" src="js/pen.js"></script>
+    <script type="text/javascript" src="js/line.js"></script>
+    <script type="text/javascript" src="js/star.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
+    <script type="text/javascript" src="js/tool-manager.js"></script>
 </body>
 </html>
