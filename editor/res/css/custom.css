@@ -1,0 +1,53 @@
+
+#editor-tools {
+	width: 1024px;
+	margin: 0 auto;
+}
+
+#editor-tools .tool, #editor-tools .option {
+	display: block;
+	float: left;
+	padding: 0.25em;
+	margin-right: 0.25em;
+	background-color: #ECECEC;
+	border: medium solid #CCC;
+	border-radius: 4px;
+	font-size: 2em;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+#editor-tools .tool.active, #editor-tools .tool:hover, #editor-tools .option:hover, .sp-replacer:hover, .sp-replacer.sp-active {
+	background-color: #FFF;
+	border-color: #333;
+	color: #dd4814;
+}
+
+#editor-tools .tool-additions {
+	float: right;
+	display: table;
+	table-layout: fixed;
+}
+
+#editor-tools .tool-additions #slider {
+	margin-top: 5px;
+	float: right;
+}
+
+.vcontainer {
+	display: table-cell;
+	padding: 0.25em;
+	vertical-align: middle;
+}
+
+/*Color picker*/
+.sp-replacer {
+	font-size: 2em;
+	height: 2em;
+	background-color: #ECECEC;
+	border: medium solid #CCC;
+	border-radius: 4px;
+}
+.sp-replacer > .sp-preview {
+	height: 42px;
+}

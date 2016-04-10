@@ -6,14 +6,14 @@ function AbstractTool(context, redrawerCtx) {
 
 	tool.addAlphaChannel = function(color, alpha) {
 		return color.replace('rgb', 'rgba').replace(')', ','+ alpha +')');
-	}
+	};
 
 	tool.clearCanvas = function() {
 		if (!tool.reCtx) {
 			return;
 		}
 		tool.reCtx.clearRect(0, 0, 1024, 640);
-	}
+	};
 
 	tool.getRandomInRange = function(min, max) {
 		return Math.random() * (max - min) + min;

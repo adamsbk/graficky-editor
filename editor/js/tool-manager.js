@@ -5,11 +5,12 @@ var ToolManager = new function () {
 	line: new Line(Canvas.ctx, Canvas.redrawerCtx),
 	star: new Star(Canvas.ctx, Canvas.redrawerCtx),
 	rectangle: new Rectangle(Canvas.ctx, Canvas.redrawerCtx),
-	ellipse: new Ellipse(Canvas.ctx, Canvas.redrawerCtx)
+	ellipse: new Ellipse(Canvas.ctx, Canvas.redrawerCtx),
+	text: new Text(Canvas.ctx, Canvas.redrawerCtx)
     };
     console.log(self);
     this.selectedTool = tools['pen'];
-    this.selectedTool.switch();
+    this.selectedTool.enable();
 
     var addPosToEventObj = function (e) {
 	var rect = Canvas.canvas.getBoundingClientRect();
@@ -53,13 +54,25 @@ var ToolManager = new function () {
 	if (self.selectedTool.hasOwnProperty('dragEnd')) {
 	    self.selectedTool.dragEnd(e);
 	}
+    }).click(function (e) {
+    	addPosToEventObj(e);
+    	if (self.selectedTool.hasOwnProperty('click')) {
+	    	self.selectedTool.click(e);
+		}
     });
-    $(".tool").click(function (e) {
-	self.selectedTool = tools[$(this).data("tool")];
-	if (self.selectedTool.hasOwnProperty('switch')) {
-	    self.selectedTool.switch();
-	}
-	$("#slider").slider("value", self.selectedTool.width);
+    $("#editor-tools > .tool").click(function (e) {
+    	$("#editor-tools > .tool.active").removeClass('active');
+    	$(this).addClass('active');
+
+    	if (self.selectedTool.hasOwnProperty('disable')) {
+    		self.selectedTool.disable();
+    	}
+
+		self.selectedTool = tools[$(this).data("tool")];
+		if (self.selectedTool.hasOwnProperty('enable')) {
+	    	self.selectedTool.enable();
+		}
+		$("#slider").slider("value", self.selectedTool.width);
     });
 
     $("#slider").slider({

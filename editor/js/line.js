@@ -35,7 +35,7 @@ var Line = function(context, redrawerCtx) {
 		self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
 	};
 
-	self.switch = function() {
+	self.enable = function() {
 		self.ctx.strokeStyle = self.color;
 		self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
 		self.ctx.lineWidth = self.width;

@@ -40,7 +40,7 @@ var Pen = function(context) {
 		self.ctx.fillStyle = self.color;
 	};
 
-	self.switch = function() {
+	self.enable = function() {
 		self.ctx.strokeStyle = self.color;
 		self.ctx.fillStyle = self.color;
 		self.ctx.lineWidth = self.width;

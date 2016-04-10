@@ -36,9 +36,9 @@ var Star = function(context, redrawerCtx) {
     };
 
     var paint = function(e, context) {
-        var outerRadius = Math.min(Math.abs(prevEvt.calcX - e.calcX), Math.abs(prevEvt.calcY - e.calcY)) / 2;
+        var outerRadius =  Math.sqrt(Math.pow(prevEvt.calcX - e.calcX, 2) + Math.pow(prevEvt.calcY - e.calcY, 2));
         var innerRadius = outerRadius * params.innerRadius;
-        drawStar(context || self.ctx, Math.min(prevEvt.calcX+outerRadius, e.calcX+outerRadius), Math.min(prevEvt.calcY+outerRadius, e.calcY+outerRadius), params.spikes, outerRadius, innerRadius);
+        drawStar(context || self.ctx, prevEvt.calcX, prevEvt.calcY, params.spikes, outerRadius, innerRadius);
     };
 
     var repaint = function(e) {
@@ -64,7 +64,7 @@ var Star = function(context, redrawerCtx) {
         self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
     };
 
-    self.switch = function() {
+    self.enable = function() {
         self.ctx.strokeStyle = self.color;
         self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
         self.ctx.lineWidth = self.width;
@@ -74,8 +74,8 @@ var Star = function(context, redrawerCtx) {
     };
 
     self.dragStart = function(e) {
-        params.spikes = Math.floor(self.getRandomInRange(5,15));
-        params.innerRadius = self.getRandomInRange(0.2, 0.8);
+        params.spikes = Math.floor(self.getRandomInRange(5,13));
+        params.innerRadius = self.getRandomInRange(0.35, 0.65);
         prevEvt = e;
     };
 

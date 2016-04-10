@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+	<link rel="stylesheet" href="res/css/icomoon.css">
+	<link rel="stylesheet" href="res/css/custom.css">
+    <style>
+	body{
+	    background-color: #ddd;
+	}
+	
+	.canvas-wrap {
+		margin: 12px auto;
+	}
+	.canvas-layers {
+		position: relative;
+		width: 1024px;
+		height: 640px;
+		margin-left: auto;
+		margin-right: auto;
+		background-color: #fff;
+	}
+	.canvas-wrap canvas{
+		position: absolute;
+	    left: 0;
+	    top: 0;
+	    cursor: crosshair;
+	}
+	#slider {
+		width: 230px;
+	}
+    </style>
+</head>
+<body>
+	<div id="editor-tools" class="clearfix">
+		<div class="tool active" id="pen" data-tool="pen"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
+		<div class="tool" id="line" data-tool="line"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
+		<div class="tool" id="rectangle" data-tool="rectangle"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
+		<div class="tool" id="star" data-tool="star"><span class="icon-star"></span><span class="sr-only">Hviezda</span></div>
+		<div class="tool" id="ellipse" data-tool="ellipse"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
+		<div class="tool" id="text" data-tool="text"><span class="icon-text"></span><span class="sr-only">Text</span></div>
+		<div class="tool" id="cutout" data-tool="cutout"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
+
+		<a class="option" id="download" href="#"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
+
+		<div class="tool-additions">
+    		<div class="vcontainer"><span class="small">Farba čiary:</span> <input type="text" id="linecolorpicker" /></div>
+    		<div class="vcontainer"><span class="small">Farba výplne:</span> <input type="text" id="fillcolorpicker" /></div>
+    		<div class="vcontainer"><span class="small">Hrúbka čiary:</span> <div id="slider"></div></div>
+		</div>
+	</div>
+    <div class="canvas-wrap">
+    	<div class="canvas-layers">
+    		<canvas id="editor" width="1024" height="640"></canvas>
+    		<canvas id="redrawer" width="1024" height="640"></canvas>
+    	</div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <script type="text/javascript" src="js/tool.js"></script>
+    <script type="text/javascript" src="js/pen.js"></script>
+    <script type="text/javascript" src="js/line.js"></script>
+    <script type="text/javascript" src="js/star.js"></script>
+    <script type="text/javascript" src="js/rectangle.js"></script>
+    <script type="text/javascript" src="js/ellipse.js"></script>
+    <script type="text/javascript" src="js/text.js"></script>
+    <script type="text/javascript" src="js/canvas.js"></script>
+    <script type="text/javascript" src="js/tool-manager.js"></script>
+</body>
+</html>
