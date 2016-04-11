@@ -1,6 +1,8 @@
 const CONFIG = {
     canvas_selector: '#editor',
-    redrawer_selector: '#redrawer'
+    redrawer_selector: '#redrawer',
+    width: 1024,
+    height: 640
 }
 
 var Canvas = new function () {
@@ -8,8 +10,8 @@ var Canvas = new function () {
     this.canvas = $(CONFIG.canvas_selector);
     this.redrawerCanvas = $(CONFIG.redrawer_selector);
     if (this.canvas.length === 0 || this.redrawerCanvas.length === 0) {
-		console.error('Canvas selector does not match any canvas in the document.');
-		return;
+	console.error('Canvas selector does not match any canvas in the document.');
+	return;
     }
 
     this.canvas = this.canvas[0];
@@ -19,10 +21,11 @@ var Canvas = new function () {
 };
 
 function downloadCanvas(link, canvasId, filename) {
-	link.href = $(CONFIG.canvas_selector)[0].toDataURL();
-	link.download = filename;
+    link.href = $(CONFIG.canvas_selector)[0].toDataURL();
+    link.download = filename;
 }
 
-$('#download').click(function() {
-	downloadCanvas(this, 'canvas', 'obrazok.png');
+$('#download').click(function () {
+    ToolManager.selectedTool.disable();
+    downloadCanvas(this, 'canvas', 'obrazok.png');
 });

@@ -6,7 +6,8 @@ var ToolManager = new function () {
 	star: new Star(Canvas.ctx, Canvas.redrawerCtx),
 	rectangle: new Rectangle(Canvas.ctx, Canvas.redrawerCtx),
 	ellipse: new Ellipse(Canvas.ctx, Canvas.redrawerCtx),
-	text: new Text(Canvas.ctx, Canvas.redrawerCtx)
+	text: new Text(Canvas.ctx, Canvas.redrawerCtx),
+	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx)
     };
     console.log(self);
     this.selectedTool = tools['pen'];
@@ -23,7 +24,7 @@ var ToolManager = new function () {
 	    self.selectedTool.sliderChanged(value);
 	}
     };
-
+    
     this.lineColorChanged = function (color) {
 	if (self.selectedTool.hasOwnProperty('lineColorChanged')) {
 	    self.selectedTool.lineColorChanged(color);

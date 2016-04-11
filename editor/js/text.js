@@ -50,7 +50,7 @@ var Text = function(context, redrawerCtx) {
 		if (pos.x===null || pos.y===null) {
 			return;
 		}
-		if (!((e.charCode >= 65 && e.charCode <= 90) || (e.charCode >= 97 && e.charCode <= 122) || e.charCode===32)) {
+		if (e.charCode < 32) {
 			return;
 		}
 		ret += e.key;

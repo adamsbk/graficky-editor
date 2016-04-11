@@ -28,9 +28,14 @@
 	    top: 0;
 	    cursor: crosshair;
 	}
-	#slider {
+	#slider, #rotationSlider, #scalingSlider {
 		width: 230px;
 	}
+	
+	#transformations{
+	    display: none;
+	}
+	
     </style>
 </head>
 <body>
@@ -49,7 +54,10 @@
     		<div class="vcontainer"><span class="small">Farba čiary:</span> <input type="text" id="linecolorpicker" /></div>
     		<div class="vcontainer"><span class="small">Farba výplne:</span> <input type="text" id="fillcolorpicker" /></div>
     		<div class="vcontainer"><span class="small">Hrúbka čiary:</span> <div id="slider"></div></div>
+		
 		</div>
+		<div class="vcontainer"><span class="small">Otočenie:</span> <div id="rotationSlider"></div></div>
+		<div class="vcontainer"><span class="small">Zväčšovanie:</span> <div id="scalingSlider"></div></div>
 	</div>
     <div class="canvas-wrap">
     	<div class="canvas-layers">
@@ -57,6 +65,8 @@
     		<canvas id="redrawer" width="1024" height="640"></canvas>
     	</div>
     </div>
+    <canvas id="transformations" width="1024" height="640"></canvas>
+    
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -69,6 +79,7 @@
     <script type="text/javascript" src="js/rectangle.js"></script>
     <script type="text/javascript" src="js/ellipse.js"></script>
     <script type="text/javascript" src="js/text.js"></script>
+    <script type="text/javascript" src="js/cutout.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
     <script type="text/javascript" src="js/tool-manager.js"></script>
 </body>
