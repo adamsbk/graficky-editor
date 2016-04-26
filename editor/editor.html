@@ -28,7 +28,7 @@
 	    top: 0;
 	    cursor: crosshair;
 	}
-	#slider, #rotationSlider, #scalingSlider {
+	#penWidthSlider, #rotationSlider, #scalingSlider {
 		width: 230px;
 	}
 	
@@ -51,13 +51,12 @@
 		<a class="option" id="download" href="#"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
 
 		<div class="tool-additions">
-    		<div class="vcontainer"><span class="small">Farba čiary:</span> <input type="text" id="linecolorpicker" /></div>
-    		<div class="vcontainer"><span class="small">Farba výplne:</span> <input type="text" id="fillcolorpicker" /></div>
-    		<div class="vcontainer"><span class="small">Hrúbka čiary:</span> <div id="slider"></div></div>
-		
+    		<div class="vcontainer attr lineColorPicker"><span class="small">Farba čiary:</span> <input type="text" id="lineColorPicker" /></div>
+    		<div class="vcontainer attr fillColorPicker"><span class="small">Farba výplne:</span> <input type="text" id="fillColorPicker" /></div>
+    		<div class="vcontainer attr penWidthSlider"><span class="small">Hrúbka čiary:</span> <div id="penWidthSlider"></div></div>
+    		<div class="vcontainer attr rotationSlider"><span class="small">Otočenie:</span> <div id="rotationSlider"></div></div>
+			<div class="vcontainer attr scalingSlider"><span class="small">Zväčšovanie:</span> <div id="scalingSlider"></div></div>
 		</div>
-		<div class="vcontainer"><span class="small">Otočenie:</span> <div id="rotationSlider"></div></div>
-		<div class="vcontainer"><span class="small">Zväčšovanie:</span> <div id="scalingSlider"></div></div>
 	</div>
     <div class="canvas-wrap">
     	<div class="canvas-layers">

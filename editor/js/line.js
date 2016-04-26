@@ -1,9 +1,8 @@
 var Line = function(context, redrawerCtx) {
 	var self = AbstractTool(context, redrawerCtx);
 	
-	self.name = 'Čiara',
-	self.width = 15,
-	self.color = 'rgb(0,0,0)';
+	self.attrs = ['lineColorPicker', 'penWidthSlider'];
+	self.name = 'Čiara';
 
 	var prevEvt = null;
 
@@ -24,22 +23,22 @@ var Line = function(context, redrawerCtx) {
 	}
 
 	self.sliderChanged = function(value) {
-		self.width = value;
-		self.ctx.lineWidth = self.width;
-		self.reCtx.lineWidth = self.width;
+		self.penWidth = value;
+		self.ctx.lineWidth = self.penWidth;
+		self.reCtx.lineWidth = self.penWidth;
 	};
 
 	self.lineColorChanged = function(color) {
-		self.color = color;
-		self.ctx.strokeStyle = self.color;
-		self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
+		self.lineColor = color;
+		self.ctx.strokeStyle = self.lineColor;
+		self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
 	};
 
 	self.enable = function() {
-		self.ctx.strokeStyle = self.color;
-		self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
-		self.ctx.lineWidth = self.width;
-		self.reCtx.lineWidth = self.width;
+		self.ctx.strokeStyle = self.lineColor;
+		self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
+		self.ctx.lineWidth = self.penWidth;
+		self.reCtx.lineWidth = self.penWidth;
 		self.ctx.lineCap = "round";
 		self.reCtx.lineCap = "round";
 	};

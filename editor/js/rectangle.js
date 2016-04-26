@@ -2,10 +2,7 @@ var Rectangle = function (context, redrawerCtx) {
     var self = AbstractTool(context, redrawerCtx);
 
     self.name = 'Štvoruholník',
-	    self.width = 15,
-	    self.color = 'rgb(0,0,0)',
-	    self.fillColor = 'rgb(0,0,0)',
-	    self.ShiftPressed = false;
+	self.ShiftPressed = false;
 
     var prevEvt = null;
 
@@ -16,8 +13,8 @@ var Rectangle = function (context, redrawerCtx) {
 	} else {
 	    self.ctx.rect(prevEvt.calcX, prevEvt.calcY, e.calcX - prevEvt.calcX, e.calcY - prevEvt.calcY);
 	}
+	self.ctx.fill();
 	self.ctx.stroke();
-	context.fill();
     };
 
     var repaint = function (e) {
@@ -29,20 +26,21 @@ var Rectangle = function (context, redrawerCtx) {
 	} else {
 	    self.reCtx.rect(prevEvt.calcX, prevEvt.calcY, e.calcX - prevEvt.calcX, e.calcY - prevEvt.calcY);
 	}
+	self.reCtx.fill();
 	self.reCtx.stroke();
-	context.fill();
+
     }
 
-    self.sliderChanged = function (value) {
-	self.width = value;
-	self.ctx.lineWidth = self.width;
-	self.reCtx.lineWidth = self.width;
+    self.penWidthChanged = function (value) {
+	self.penWidth = value;
+	self.ctx.lineWidth = self.penWidth;
+	self.reCtx.lineWidth = self.penWidth;
     };
 
     self.lineColorChanged = function (color) {
-	self.color = color;
-	self.ctx.strokeStyle = self.color;
-	self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
+	self.lineColor = color;
+	self.ctx.strokeStyle = self.lineColor;
+	self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
     };
 
     self.fillColorChanged = function (color) {
@@ -52,10 +50,12 @@ var Rectangle = function (context, redrawerCtx) {
     };
 
     self.enable = function () {
-	self.ctx.strokeStyle = self.color;
-	self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
-	self.ctx.lineWidth = self.width;
-	self.reCtx.lineWidth = self.width;
+	self.ctx.strokeStyle = self.lineColor;
+	self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
+	self.ctx.fillStyle = self.fillColor;
+    self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
+	self.ctx.lineWidth = self.penWidth;
+	self.reCtx.lineWidth = self.penWidth;
 	self.ctx.lineCap = "round";
 	self.reCtx.lineCap = "round";
     };

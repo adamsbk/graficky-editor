@@ -1,10 +1,7 @@
 var Star = function(context, redrawerCtx) {
     var self = AbstractTool(context, redrawerCtx);
     
-    self.name = 'Hviezda',
-    self.width = 15,
-    self.color = 'rgb(0,0,0)';
-    self.fillColor = 'rgb(0,0,0)';
+    self.name = 'Hviezda';
 
     var prevEvt = null;
     var params = {spikes: null, innerRadius: null};
@@ -46,16 +43,16 @@ var Star = function(context, redrawerCtx) {
         paint(e, self.reCtx)
     }
 
-    self.sliderChanged = function(value) {
-        self.width = value;
-        self.ctx.lineWidth = self.width;
-        self.reCtx.lineWidth = self.width;
+    self.penWidthChanged = function(value) {
+        self.penWidth = value;
+        self.ctx.lineWidth = self.penWidth;
+        self.reCtx.lineWidth = self.penWidth;
     };
 
     self.lineColorChanged = function(color) {
-        self.color = color;
-        self.ctx.strokeStyle = self.color;
-        self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
+        self.lineColor = color;
+        self.ctx.strokeStyle = self.lineColor;
+        self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
     };
 
     self.fillColorChanged = function(color) {
@@ -65,10 +62,12 @@ var Star = function(context, redrawerCtx) {
     };
 
     self.enable = function() {
-        self.ctx.strokeStyle = self.color;
-        self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 0.5);
-        self.ctx.lineWidth = self.width;
-        self.reCtx.lineWidth = self.width;
+        self.ctx.strokeStyle = self.lineColor;
+        self.reCtx.strokeStyle = self.addAlphaChannel(self.lineColor, 0.5);
+        self.ctx.fillStyle = self.fillColor;
+        self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
+        self.ctx.lineWidth = self.penWidth;
+        self.reCtx.lineWidth = self.penWidth;
         self.ctx.lineCap = "round";
         self.reCtx.lineCap = "round";
     };

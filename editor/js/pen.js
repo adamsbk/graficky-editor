@@ -1,9 +1,8 @@
 var Pen = function(context) {
 	var self = AbstractTool(context);
 
-	self.name = 'Pero',
-	self.width = 15,
-	self.color = '#000000';
+	self.attrs = ['lineColorPicker', 'penWidthSlider'];
+	self.name = 'Pero';
 
 	var prevEvt = null;
 	var interPoint = {x: null, y: null};
@@ -25,25 +24,25 @@ var Pen = function(context) {
 	var paintPoint = function(e) {
 		self.ctx.beginPath();
 		self.ctx.moveTo(e.calcX, e.calcY);
-		self.ctx.arc(e.calcX, e.calcY, self.width/2, 0, 2 * Math.PI, true);
+		self.ctx.arc(e.calcX, e.calcY, self.penWidth/2, 0, 2 * Math.PI, true);
 		self.ctx.fill();
 	}
 
-	self.sliderChanged = function(value) {
-		self.width = value;
-		self.ctx.lineWidth = self.width;
+	self.penWidthChanged = function(value) {
+		self.penWidth = value;
+		self.ctx.lineWidth = self.penWidth;
 	};
 
 	self.lineColorChanged = function(color) {
-		self.color = color;
-		self.ctx.strokeStyle = self.color;
-		self.ctx.fillStyle = self.color;
+		self.lineColor = color;
+		self.ctx.strokeStyle = self.lineColor;
+		self.ctx.fillStyle = self.lineColor;
 	};
 
 	self.enable = function() {
-		self.ctx.strokeStyle = self.color;
-		self.ctx.fillStyle = self.color;
-		self.ctx.lineWidth = self.width;
+		self.ctx.strokeStyle = self.lineColor;
+		self.ctx.fillStyle = self.lineColor;
+		self.ctx.lineWidth = self.penWidth;
 		self.ctx.lineCap = "round";
 	};
 
@@ -60,7 +59,6 @@ var Pen = function(context) {
 	self.dragEnd = function(e) {
 		prevEvt = e;
 		paint(e);
-		//paintPoint(e);
 		interPoint.x = null;
 	};
 

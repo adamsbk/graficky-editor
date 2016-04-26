@@ -1,9 +1,9 @@
 var Text = function(context, redrawerCtx) {
 	var self = AbstractTool(context, redrawerCtx);
 	
+	self.attrs = ['lineColorPicker'];
 	self.name = 'Text';
 	self.width = 15;
-	self.color = 'rgb(0,0,0)';
 
 	var pos = {x: null, y: null};
 	var ret = '';
@@ -19,10 +19,10 @@ var Text = function(context, redrawerCtx) {
 		self.reCtx.fillText(ret, pos.x, pos.y);
 	}
 
-	self.colorChanged = function(color) {
-		self.color = color;
-		self.ctx.fillStyle = self.color;
-		self.reCtx.fillStyle = self.addAlphaChannel(self.color, 0.5);
+	self.lineColorChanged = function(color) {
+		self.lineColor = color;
+		self.ctx.fillStyle = self.lineColor;
+		self.reCtx.fillStyle = self.addAlphaChannel(self.lineColor, 0.5);
 	};
 
 	self.enable = function() {
@@ -30,6 +30,8 @@ var Text = function(context, redrawerCtx) {
 		pos.x = null;
 		pos.y = null;
 		ret = '';
+		self.ctx.fillStyle = self.lineColor;
+		self.reCtx.fillStyle = self.addAlphaChannel(self.lineColor, 0.5);
 		self.ctx.font = "16px Verdana";
 		self.reCtx.font = "16px Verdana";
 	};
@@ -47,6 +49,9 @@ var Text = function(context, redrawerCtx) {
 	};
 
 	self.keyPressed = function(e) {
+		if (!enabled) {
+			return;
+		}
 		if (pos.x===null || pos.y===null) {
 			return;
 		}
