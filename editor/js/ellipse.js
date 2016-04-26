@@ -7,6 +7,8 @@ var Ellipse = function (context, redrawerCtx) {
 
     var drawEllipse = function (context, centerX, centerY, width, height) {
 	context.beginPath();
+	width *= 2;
+	height *= 2;
 
 	context.moveTo(centerX, centerY - height / 2);
 

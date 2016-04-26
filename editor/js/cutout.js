@@ -1,14 +1,19 @@
 var Cutout = function (context, redrawerCtx) {
     var self = AbstractTool(context, redrawerCtx);
+
+    self.attrs = ['rotationSlider', 'scalingSlider'];
     self.name = 'Výrez',
 	    self.width = 1,
 	    self.color = 'rgb(0,0,0)',
 	    self.fillColor = 'rgb(0,0,0)',
 	    self.cuted = false,
-	    self.angle = 180,
+	    self.angle = 0,
 	    self.scale = 1,
-	    self.transX = 0;
-    self.transY = 0;
+	    self.transX = 0,
+	    self.transY = 0,
+	    self.image_width = 0,
+	    self.image_height = 0;
+
 
     var prevEvt = null;
     var posEvt = null;
@@ -26,11 +31,24 @@ var Cutout = function (context, redrawerCtx) {
     }
 
     var repaint = function (e) {
-	self.clearCanvas();
-	self.reCtx.beginPath();
-	self.reCtx.setLineDash([12, 8]);
-	self.reCtx.rect(prevEvt.calcX, prevEvt.calcY, e.calcX - prevEvt.calcX, e.calcY - prevEvt.calcY);
-	self.reCtx.stroke();
+	if (!self.cuted) {
+	    self.clearCanvas();
+	    self.reCtx.beginPath();
+	    self.reCtx.setLineDash([12, 8]);
+	    self.reCtx.rect(prevEvt.calcX, prevEvt.calcY, e.calcX - prevEvt.calcX, e.calcY - prevEvt.calcY);
+	    self.reCtx.stroke();
+	} else {
+	    var tempCtx = document.getElementById('transformations').getContext('2d');
+	    self.clearCanvas(self.reCtx);
+	    self.reCtx.save();
+	    self.reCtx.translate(self.transX - prevEvt.calcX - self.image_width/2, self.transY - prevEvt.calcY - self.image_height/2);
+	    self.reCtx.translate((prevEvt.calcX + self.image_width/2), (prevEvt.calcY + self.image_height/2));
+	    self.reCtx.rotate(((self.angle) / 180) * Math.PI);
+	    self.reCtx.scale(self.scale, self.scale);
+	    self.reCtx.translate(-1*(prevEvt.calcX + self.image_width/2), -1*(prevEvt.calcY + self.image_height/2));
+	    self.reCtx.drawImage(tempCtx.canvas, 0, 0, CONFIG.width, CONFIG.height);
+	    self.reCtx.restore();
+	}
     }
 
     self.sliderChanged = function (value) {
@@ -43,21 +61,19 @@ var Cutout = function (context, redrawerCtx) {
 
     };
     self.enable = function () {
-	self.reCtx.save();
 	self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 1);
 	self.reCtx.lineWidth = self.width;
     };
     self.disable = function () {
-	self.reCtx.restore();
 	paste();
 	self.cuted = false;
 	$('#redrawer').css('cursor', 'crosshair');
     }
 
     self.dragStart = function (e) {
-	prevEvt = e;
-	self.transX = e.calcX;
-	self.transY = e.calcY;
+	if (!self.cuted) {
+	    prevEvt = e;
+	}
     };
     self.drag = function (e) {
 	if (!self.cuted) {
@@ -73,46 +89,42 @@ var Cutout = function (context, redrawerCtx) {
 	    cut(e);
 	    self.cuted = true;
 	    $('#redrawer').css('cursor', 'move');
+	    self.image_height = Math.abs(e.calcY - prevEvt.calcY);
+	    self.image_width = Math.abs(e.calcX - prevEvt.calcX);
+	    self.transX = e.calcX - self.image_width/2;
+	    self.transY = e.calcY - self.image_height/2;
 	}
     };
     self.translate = function (e) {
-	var tempCtx = document.getElementById('transformations').getContext('2d');
-	self.clearCanvas(self.reCtx);
-	self.reCtx.translate(e.calcX - self.transX, e.calcY - self.transY);
-	self.reCtx.drawImage(tempCtx.canvas, 0, 0, CONFIG.width, CONFIG.height);
-	self.transX = e.calcX;
-	self.transY = e.calcY;
+	if (self.cuted) {
+	    self.transX = e.calcX;
+	    self.transY = e.calcY;
+	    repaint();
+	}
     }
 
     self.rotationChanged = function (value) {
 	if (self.cuted) {
-	    var tempCtx = document.getElementById('transformations').getContext('2d');
-	    self.clearCanvas(self.reCtx);
-	    self.reCtx.translate((prevEvt.calcX + posEvt.calcX) / 2, (prevEvt.calcY + posEvt.calcY) / 2);
-	    self.reCtx.rotate(((value - self.angle) / 180) * Math.PI);
-	    self.reCtx.translate(-1 * ((prevEvt.calcX + posEvt.calcX) / 2), -1 * ((prevEvt.calcY + posEvt.calcY) / 2));
-	    self.reCtx.drawImage(tempCtx.canvas, 0, 0, CONFIG.width, CONFIG.height);
+	    self.prev_angle = self.angle;
 	    self.angle = value;
+	    repaint();
+	    self.prev_angle = self.angle;
 	}
     }
 
     self.scalingChanged = function (value) {
 	if (self.cuted) {
-	    var tempCtx = document.getElementById('transformations').getContext('2d');
-	    self.clearCanvas(self.reCtx);
-	    self.reCtx.translate((prevEvt.calcX + posEvt.calcX) / 2, (prevEvt.calcY + posEvt.calcY) / 2);
-	    self.reCtx.scale(value / self.scale, value / self.scale);
-	    self.reCtx.translate(-1 * ((prevEvt.calcX + posEvt.calcX) / 2), -1 * ((prevEvt.calcY + posEvt.calcY) / 2));
-	    self.reCtx.drawImage(tempCtx.canvas, 0, 0, CONFIG.width, CONFIG.height);
+	    self.prev_scale = self.scale;
 	    self.scale = value;
+	    repaint();
+	    self.prev_scale = self.scale;
 	}
     }
 
-
     $("#rotationSlider").slider({
-	min: 1,
-	max: 360,
-	value: 180,
+	min: -179,
+	max: 180,
+	value: 0,
 	change: function (event, ui) {
 	    self.rotationChanged(ui.value);
 	}
