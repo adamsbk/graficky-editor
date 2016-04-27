@@ -40,6 +40,67 @@
 	vertical-align: middle;
 }
 
+#cutout-ui {
+	position: absolute;
+	border: 1px dashed #aaa;
+}
+
+#cutout-scale {
+	width: 0;
+	height: 0;
+}
+#cutout-rotate {
+	position: absolute;
+	width: 0;
+	height: 20px;
+	left: 50%;
+	top: -20px;
+	margin-left: -1px;
+	border: 1px solid #aaa;
+}
+#cutout-scale .bottom, #cutout-scale .top, #cutout-rotate .point {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 1px solid #555;
+	background-color: #aaa;
+
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	-webkit-user-drag: none;
+	-khtml-user-drag: none;
+	-moz-user-drag: none;
+	-o-user-drag: none;
+	user-drag: none;
+}
+#cutout-scale .bottom:hover, #cutout-scale .top:hover {
+	background-color: #555;
+}
+#cutout-rotate .point {
+	top: -13px;
+	left: -7px;
+	background-color: #A0FFA0;
+}
+#cutout-rotate .point:hover {
+	background-color: #008000;
+}
+#cutout-scale .bottom {
+	bottom: -7px;
+}
+#cutout-scale .top {
+	top: -7px;
+}
+#cutout-scale .left {
+	left: -7px;
+}
+#cutout-scale .right {
+	right: -7px;
+}
+
 /*Color picker*/
 .sp-replacer {
 	font-size: 2em;

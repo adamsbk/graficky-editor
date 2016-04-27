@@ -62,7 +62,7 @@ var ToolManager = new function () {
     }
 
     var dragStart = false;
-    $(Canvas.redrawerCanvas).mousedown(function (e) {
+    $('#listen-events').mousedown(function (e) {
 	dragStart = true;
 	addPosToEventObj(e);
 	if (self.selectedTool.hasOwnProperty('dragStart')) {
@@ -116,7 +116,7 @@ var ToolManager = new function () {
 	preferredFormat: "hex",
 	showInput: true,
 	showPalette: true,
-	palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)"]],
+	palette: [["black", "white", "yellow", "orange", "red", "green", "pink", "violet", "cyan", "blue"]],
 	move: function (color) {
 	    self.lineColorChanged(color.toRgbString());
 	}
@@ -127,7 +127,7 @@ var ToolManager = new function () {
 	preferredFormat: "hex",
 	showInput: true,
 	showPalette: true,
-	palette: [["red", "rgba(0, 255, 0, .5)", "rgb(0, 0, 255)", "rgba(0, 0, 0, 0)", ]],
+	palette: [["black", "white", "yellow", "orange", "red", "green", "pink", "violet", "cyan", "blue"]],
 	move: function (color) {
 	    self.fillColorChanged(color.toRgbString());
 	}

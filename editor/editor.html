@@ -22,11 +22,16 @@
 		margin-right: auto;
 		background-color: #fff;
 	}
-	.canvas-wrap canvas{
+	.canvas-wrap canvas, #listen-events {
 		position: absolute;
 	    left: 0;
 	    top: 0;
-	    cursor: crosshair;
+	    width: 1024px;
+	    height: 640px;
+	}
+	#listen-events {
+		cursor: crosshair;
+		overflow: hidden;
 	}
 	#penWidthSlider, #rotationSlider, #scalingSlider {
 		width: 230px;
@@ -62,6 +67,19 @@
     	<div class="canvas-layers">
     		<canvas id="editor" width="1024" height="640"></canvas>
     		<canvas id="redrawer" width="1024" height="640"></canvas>
+    		<div id="listen-events">
+    			<div id="cutout-ui" class="hide">
+    				<div id="cutout-scale">
+    					<div class="top left"></div>
+    					<div class="top right"></div>
+    					<div class="bottom left"></div>
+    					<div class="bottom right"></div>
+    				</div>
+    				<div id="cutout-rotate">
+    					<div class="point"></div>
+    				</div>
+    			</div>
+    		</div>
     	</div>
     </div>
     <canvas id="transformations" width="1024" height="640"></canvas>
