@@ -16,8 +16,7 @@ var Cutout = function (context, redrawerCtx) {
 
 	var cutoutUi = $('#cutout-ui');
 	var isScaledByUi = false;
-	var scalePrevEvt = null;
-	var dragDropScale = {x: 0, y: 0};
+	var halfDiagonalLength = 0;
 	$('#cutout-scale').mousedown(function() {
 		isScaledByUi = true;
 	});
@@ -75,7 +74,6 @@ var Cutout = function (context, redrawerCtx) {
 		paste();
 		self.cuted = false;
 		cutoutUi.css('transform', 'none').addClass('hide');
-		$('#redrawer').css('cursor', 'crosshair');
 	}
 
 	self.dragStart = function (e) {
@@ -85,14 +83,6 @@ var Cutout = function (context, redrawerCtx) {
 				'left': prevEvt.calcX,
 				'top': prevEvt.calcY
 			}).removeClass('hide');
-		} else if (isScaledByUi) {
-			scalePrevEvt = e;
-			var mapToStartingPointX = self.image_width*(self.scale - 1)/2;
-			var mapToStartingPointY = self.image_height*(self.scale - 1)/2;
-			dragDropScale.x = e.calcX;
-			dragDropScale.y = e.calcY;
-			dragDropScale.x += e.calcX > self.transX ? - mapToStartingPointX : mapToStartingPointX;
-			dragDropScale.y += e.calcY > self.transY ? - mapToStartingPointY : mapToStartingPointY;
 		} else if (isRotatedByUi) {
 			dragDropRotationPrev = e.calcX;
 		}
@@ -108,17 +98,10 @@ var Cutout = function (context, redrawerCtx) {
 				'top': Math.min(e.calcY, prevEvt.calcY)
 			});
 		} else if (isScaledByUi) {
-			var scaleDist = Math.sqrt(
-				(dragDropScale.x-e.calcX)*(dragDropScale.x-e.calcX) +
-				(dragDropScale.y-e.calcY)*(dragDropScale.y-e.calcY)
+			var currentDiagonalLength = Math.sqrt(
+				(e.calcX-self.transX)*(e.calcX-self.transX) + (e.calcY-self.transY)*(e.calcY-self.transY)
 			);
-			if (
-				(e.calcX-self.transX) * (e.calcX-self.transX) + (e.calcY-self.transY) * (e.calcY-self.transY) <
-				(self.image_width/2) * (self.image_width/2) + (self.image_height/2) * (self.image_height/2)
-			) {
-				scaleDist = -scaleDist;
-			}
-			self.scalingChanged((self.image_width+2*scaleDist) / self.image_width);
+			self.scalingChanged(currentDiagonalLength/halfDiagonalLength);
 		} else if (isRotatedByUi) {
 			var rotateBy = e.calcX - dragDropRotationPrev;
 			self.rotationChanged((self.angle + rotateBy) % 360);
@@ -135,10 +118,10 @@ var Cutout = function (context, redrawerCtx) {
 			self.cuted = true;
 			self.image_height = Math.abs(e.calcY - prevEvt.calcY);
 			self.image_width = Math.abs(e.calcX - prevEvt.calcX);
+			halfDiagonalLength = Math.sqrt(self.image_height/2*self.image_height/2 + self.image_width/2*self.image_width/2);
 			self.transX = e.calcX - self.image_width/2;
 			self.transY = e.calcY - self.image_height/2;
 
-			$('listen-events').css('cursor', 'move');
 			cutoutUi.css({
 				'width': self.image_width,
 				'height': self.image_height,

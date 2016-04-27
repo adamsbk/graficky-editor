@@ -43,6 +43,7 @@
 #cutout-ui {
 	position: absolute;
 	border: 1px dashed #aaa;
+	cursor: move;
 }
 
 #cutout-scale {
@@ -65,6 +66,7 @@
 	border-radius: 50%;
 	border: 1px solid #555;
 	background-color: #aaa;
+	cursor: pointer;
 
 	-webkit-user-select: none;
 	-khtml-user-select: none;

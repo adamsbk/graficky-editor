@@ -30,7 +30,7 @@
 	    height: 640px;
 	}
 	#listen-events {
-		cursor: crosshair;
+		cursor: url(res/img/barretr-Pencil-32px.png) 0 31, auto;
 		overflow: hidden;
 	}
 	#penWidthSlider, #rotationSlider, #scalingSlider {
@@ -45,15 +45,15 @@
 </head>
 <body>
 	<div id="editor-tools" class="clearfix">
-		<div class="tool active" id="pen" data-tool="pen"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
-		<div class="tool" id="line" data-tool="line"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
-		<div class="tool" id="rectangle" data-tool="rectangle"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
-		<div class="tool" id="star" data-tool="star"><span class="icon-star"></span><span class="sr-only">Hviezda</span></div>
-		<div class="tool" id="ellipse" data-tool="ellipse"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
-		<div class="tool" id="text" data-tool="text"><span class="icon-text"></span><span class="sr-only">Text</span></div>
-		<div class="tool" id="cutout" data-tool="cutout"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
+		<div class="tool active" id="pen" data-tool="pen" data-toggle="tooltip" title="Pero: kreslí čiary voľnou rukou"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
+		<div class="tool" id="line" data-tool="line" data-toggle="tooltip" title="Čiara: kreslí úsečky"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
+		<div class="tool" id="rectangle" data-tool="rectangle" data-toggle="tooltip" title="Obdĺžnik: kreslí obdĺžnik"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
+		<div class="tool" id="star" data-tool="star" data-toggle="tooltip" title="Hviezda: kreslí hviezdy"><span class="icon-star"></span><span class="sr-only">Hviezda</span></div>
+		<div class="tool" id="ellipse" data-tool="ellipse" data-toggle="tooltip" title="Elipsa: kreslí elipsy"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
+		<div class="tool" id="text" data-tool="text" data-toggle="tooltip" title="Text: do grafickej plochy sa dá písať"><span class="icon-text"></span><span class="sr-only">Text</span></div>
+		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, kopírovanie a mazanie"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
 
-		<a class="option" id="download" href="#"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
+		<a class="option" id="download" href="#" data-toggle="tooltip" title="Uložiť vo formáte PNG"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
 
 		<div class="tool-additions">
     		<div class="vcontainer attr lineColorPicker"><span class="small">Farba čiary:</span> <input type="text" id="lineColorPicker" /></div>
@@ -86,8 +86,8 @@
     
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
     <script type="text/javascript" src="js/tool.js"></script>
     <script type="text/javascript" src="js/pen.js"></script>

@@ -26,6 +26,10 @@ function downloadCanvas(link, canvasId, filename) {
 }
 
 $('#download').click(function () {
-    ToolManager.selectedTool.disable();
+    if (ToolManager.selectedTool.hasOwnProperty('disable')) {
+        ToolManager.selectedTool.disable();
+    }
     downloadCanvas(this, 'canvas', 'obrazok.png');
 });
+
+$('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
