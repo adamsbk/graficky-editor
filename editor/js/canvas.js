@@ -30,6 +30,9 @@ $('#download').click(function () {
         ToolManager.selectedTool.disable();
     }
     downloadCanvas(this, 'canvas', 'obrazok.png');
+    if (ToolManager.selectedTool.hasOwnProperty('enable')) {
+        ToolManager.selectedTool.enable();
+    }
 });
 
 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
