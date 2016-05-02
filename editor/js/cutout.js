@@ -107,10 +107,12 @@ var Cutout = function (context, redrawerCtx) {
 			var currentDiagonalLength = Math.sqrt(
 				(e.calcX-self.transX)*(e.calcX-self.transX) + (e.calcY-self.transY)*(e.calcY-self.transY)
 			);
-			self.scalingChanged(currentDiagonalLength/halfDiagonalLength);
+			//self.scalingChanged(currentDiagonalLength/halfDiagonalLength);
+			$("#scalingSlider").slider({value:currentDiagonalLength/halfDiagonalLength});
 		} else if (isRotatedByUi) {
 			var rotateBy = e.calcX - dragDropRotationPrev;
-			self.rotationChanged((self.angle + rotateBy) % 360);
+			//self.rotationChanged((self.angle + rotateBy) % 360);
+			$("#rotationSlider").slider({value:(self.angle + rotateBy * 0.8) % 360});
 			dragDropRotationPrev = e.calcX;
 		} else {
 			self.translate(e);
@@ -225,18 +227,25 @@ var Cutout = function (context, redrawerCtx) {
 		min: -360,
 		max: 360,
 		value: 0,
+		slide: function (event, ui) {
+			self.rotationChanged(ui.value);
+		},
 		change: function (event, ui) {
 			self.rotationChanged(ui.value);
 		}
+		
 	});
     //trigger slidechange
     $('#rotationSlider').slider('value', $('#rotationSlider').slider('value'));
     $("#scalingSlider").slider({
-    	min: 0.1,
-    	max: 2,
+    	min: 0.05,
+    	max: 6,
     	value: 1,
-    	step: 0.1,
-    	change: function (event, ui) {
+    	step: 0.05,
+    	slide: function (event, ui) {
+    		self.scalingChanged(ui.value);
+    	},
+	change: function (event, ui) {
     		self.scalingChanged(ui.value);
     	}
     });
