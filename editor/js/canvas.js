@@ -21,7 +21,19 @@ var Canvas = new function () {
 };
 
 function downloadCanvas(link, canvasId, filename) {
-    link.href = $(CONFIG.canvas_selector)[0].toDataURL();
+    var resizableLayer = $('#resizable-layer');
+    var wwidth = parseInt(resizableLayer.css('width'));
+    var hheight = parseInt(resizableLayer.css('height'));
+    var newCanvas = $('#saveImage')
+                        .attr('width', wwidth)
+                        .attr('height', hheight);
+    var newCtx = newCanvas[0].getContext('2d');
+    newCtx.drawImage(
+        Canvas.canvas,
+        -parseInt(resizableLayer.css('left')),
+        -parseInt(resizableLayer.css('top'))
+    );
+    link.href =   newCanvas[0].toDataURL();
     link.download = filename;
 }
 
@@ -48,3 +60,8 @@ $('#paper').click(function () {
 });
 
 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+
+$( "#resizable-layer" ).resizable({
+    containment: ".canvas-layers",
+    handles: "all"
+});

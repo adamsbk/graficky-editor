@@ -18,9 +18,19 @@
 		position: relative;
 		width: 1024px;
 		height: 640px;
+		overflow: hidden;
 		margin-left: auto;
 		margin-right: auto;
 		background-color: #fff;
+	}
+	#resizable-layer {
+		width: 1024px;
+		height: 640px;
+		border: thin solid #000;
+		box-shadow: 0 0 0 1024px #ddd;
+	}
+	#saveImage {
+		display: none;
 	}
 	.canvas-wrap canvas, #listen-events {
 		position: absolute;
@@ -36,9 +46,6 @@
 	#listen-events.eraser {
 		cursor: url(res/img/barretr-Eraser-32px.png) 0 31, auto;
 	}
-	#penWidthSlider, #rotationSlider, #scalingSlider {
-		width: 230px;
-	}
 	
 	#transformations{
 	    display: none;
@@ -48,7 +55,6 @@
 </head>
 <body>
 	<div id="editor-tools" class="clearfix">
-		 <a class="option" id="paper" href="#" data-toggle="tooltip" title="Nový papier: Vyčistí celú plochu obrázka"><span class="icon-paper"></span><span class="sr-only">Nový papier</span></a>
 		<div class="tool active" id="pen" data-tool="pen" data-toggle="tooltip" title="Pero: kreslí čiary voľnou rukou"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
 		<div class="tool" id="line" data-tool="line" data-toggle="tooltip" title="Čiara: kreslí úsečky"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
 		<div class="tool" id="rectangle" data-tool="rectangle" data-toggle="tooltip" title="Obdĺžnik: kreslí obdĺžnik"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
@@ -72,22 +78,26 @@
     	<div class="canvas-layers">
     		<canvas id="editor" width="1024" height="640"></canvas>
     		<canvas id="redrawer" width="1024" height="640"></canvas>
-    		<div id="listen-events">
-    			<div id="cutout-ui" class="hide">
-    				<div id="cutout-scale">
-    					<div class="top left"></div>
-    					<div class="top right"></div>
-    					<div class="bottom left"></div>
-    					<div class="bottom right"></div>
-    				</div>
-    				<div id="cutout-rotate">
-    					<div class="point"></div>
-    				</div>
-    			</div>
+
+    		<div id="resizable-layer">
+	    		<div id="listen-events">
+	    			<div id="cutout-ui" class="hide">
+	    				<div id="cutout-scale">
+	    					<div class="top left"></div>
+	    					<div class="top right"></div>
+	    					<div class="bottom left"></div>
+	    					<div class="bottom right"></div>
+	    				</div>
+	    				<div id="cutout-rotate">
+	    					<div class="point"></div>
+	    				</div>
+	    			</div>
+	    		</div>
     		</div>
     	</div>
     </div>
     <canvas id="transformations" width="1024" height="640"></canvas>
+    <canvas id="saveImage"></canvas>
     
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
