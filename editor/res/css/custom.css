@@ -103,6 +103,27 @@
 	right: -7px;
 }
 
+/*Slider as wifi*/
+#penWidthSlider {
+	height: 50px;
+	background: none;
+	border: 0 none;
+}
+#penWidthSlider:before {
+	content: '';
+	position: absolute;
+	filter: drop-shadow(0 0 1px #aaa);
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 25px 230px 25px 0;
+	border-color: transparent #fefefe transparent transparent;
+}
+#penWidthSlider .ui-slider-handle {
+	height: 59px;
+	opacity: 0.75;
+}
+
 /*Color picker*/
 .sp-replacer {
 	font-size: 2em;

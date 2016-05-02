@@ -33,6 +33,9 @@
 		cursor: url(res/img/barretr-Pencil-32px.png) 0 31, auto;
 		overflow: hidden;
 	}
+	#listen-events.eraser {
+		cursor: url(res/img/barretr-Eraser-32px.png) 0 31, auto;
+	}
 	#penWidthSlider, #rotationSlider, #scalingSlider {
 		width: 230px;
 	}
@@ -51,6 +54,7 @@
 		<div class="tool" id="star" data-tool="star" data-toggle="tooltip" title="Hviezda: kreslí hviezdy"><span class="icon-star"></span><span class="sr-only">Hviezda</span></div>
 		<div class="tool" id="ellipse" data-tool="ellipse" data-toggle="tooltip" title="Elipsa: kreslí elipsy"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
 		<div class="tool" id="text" data-tool="text" data-toggle="tooltip" title="Text: do grafickej plochy sa dá písať"><span class="icon-text"></span><span class="sr-only">Text</span></div>
+		<div class="tool active" id="eraser" data-tool="eraser" data-toggle="tooltip" title="Guma: gumuje zvolenou hrúbkou čiary"><span class="icon-eraser"></span><span class="sr-only">Guma</span></div>
 		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, kopírovanie a mazanie"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
 
 		<a class="option" id="download" href="#" data-toggle="tooltip" title="Uložiť vo formáte PNG"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
@@ -96,6 +100,7 @@
     <script type="text/javascript" src="js/rectangle.js"></script>
     <script type="text/javascript" src="js/ellipse.js"></script>
     <script type="text/javascript" src="js/text.js"></script>
+    <script type="text/javascript" src="js/eraser.js"></script>
     <script type="text/javascript" src="js/cutout.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
     <script type="text/javascript" src="js/tool-manager.js"></script>

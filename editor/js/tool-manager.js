@@ -7,6 +7,7 @@ var ToolManager = new function () {
 	rectangle: new Rectangle(Canvas.ctx, Canvas.redrawerCtx),
 	ellipse: new Ellipse(Canvas.ctx, Canvas.redrawerCtx),
 	text: new Text(Canvas.ctx, Canvas.redrawerCtx),
+	eraser: new Eraser(Canvas.ctx, Canvas.redrawerCtx),
 	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx)
     };
     this.selectedTool = tools['pen'];
@@ -63,27 +64,36 @@ var ToolManager = new function () {
 
     var dragStart = false;
     $('#listen-events').mousedown(function (e) {
-	dragStart = true;
-	addPosToEventObj(e);
-	if (self.selectedTool.hasOwnProperty('dragStart')) {
-	    self.selectedTool.dragStart(e);
-	}
+    	dragStart = true;
+    	if (self.selectedTool.hasOwnProperty('dragStart')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.dragStart(e);
+    	}
     }).mousemove(function (e) {
-	addPosToEventObj(e);
-	if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
-	    self.selectedTool.drag(e);
-	}
+    	if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.drag(e);
+    	}
+    	if (self.selectedTool.hasOwnProperty('mouseMove')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.mouseMove(e);
+    	}
     }).mouseup(function (e) {
-	dragStart = false;
-	addPosToEventObj(e);
-	if (self.selectedTool.hasOwnProperty('dragEnd')) {
-	    self.selectedTool.dragEnd(e);
-	}
+    	dragStart = false;
+    	if (self.selectedTool.hasOwnProperty('dragEnd')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.dragEnd(e);
+    	}
     }).click(function (e) {
-	addPosToEventObj(e);
-	if (self.selectedTool.hasOwnProperty('click')) {
-	    self.selectedTool.click(e);
-	}
+    	if (self.selectedTool.hasOwnProperty('click')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.click(e);
+    	}
+    }).mouseleave(function(e) {
+    	if (self.selectedTool.hasOwnProperty('mouseLeave')) {
+    		addPosToEventObj(e);
+    		self.selectedTool.mouseLeave(e);
+    	}
     });
     $("#editor-tools > .tool").click(function (e) {
 	$("#editor-tools > .tool.active").removeClass('active');

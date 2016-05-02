@@ -67,13 +67,19 @@ var Cutout = function (context, redrawerCtx) {
 		self.scale = 1,
 		self.transX = 0,
 		self.transY = 0,
+		self.image_width = 0,
+		self.image_height = 0;
 		self.reCtx.strokeStyle = self.addAlphaChannel(self.color, 1);
 		self.reCtx.lineWidth = self.width;
 	};
 	self.disable = function () {
 		paste();
 		self.cuted = false;
-		cutoutUi.css('transform', 'none').addClass('hide');
+		cutoutUi.css({
+			'width': 0,
+			'height': 0,
+			'transform': 'none'
+		}).addClass('hide');
 	}
 
 	self.dragStart = function (e) {
@@ -114,19 +120,29 @@ var Cutout = function (context, redrawerCtx) {
 		if (!self.cuted) {
 			self.clearCanvas();
 			posEvt = e;
+			if (posEvt.calcX < prevEvt.calcX) {
+				var tmp = prevEvt.calcX;
+				prevEvt.calcX = posEvt.calcX;
+				posEvt.calcX = tmp;
+			}
+			if (posEvt.calcY < prevEvt.calcY) {
+				var tmp = prevEvt.calcY;
+				prevEvt.calcY = posEvt.calcY;
+				posEvt.calcY = tmp;
+			}
 			cut(e);
 			self.cuted = true;
 			self.image_height = Math.abs(e.calcY - prevEvt.calcY);
 			self.image_width = Math.abs(e.calcX - prevEvt.calcX);
 			halfDiagonalLength = Math.sqrt(self.image_height/2*self.image_height/2 + self.image_width/2*self.image_width/2);
-			self.transX = e.calcX - self.image_width/2;
-			self.transY = e.calcY - self.image_height/2;
+			self.transX = prevEvt.calcX + self.image_width/2;
+			self.transY = prevEvt.calcY + self.image_height/2;
 
 			cutoutUi.css({
 				'width': self.image_width,
 				'height': self.image_height,
-				'left': Math.min(e.calcX, prevEvt.calcX),
-				'top': Math.min(e.calcY, prevEvt.calcY)
+				'left': prevEvt.calcX,
+				'top': prevEvt.calcY
 			});
 		} else if (isScaledByUi) {
 			isScaledByUi = false;
@@ -175,6 +191,35 @@ var Cutout = function (context, redrawerCtx) {
 			self.prev_scale = self.scale;
 		}
 	}
+
+	var ctrlKey = false;
+	(function performCtrlKey() {
+		$(document).keydown(function(e) {
+			if (!self.cuted) {
+				return
+			}
+			if (!ctrlKey && e.keyCode === 17) {
+				ctrlKey = true;
+			} else if (ctrlKey && 118) { //vKey
+				paste();
+			} else if (e.keyCode === 46) { //Delete key - not in keyPress because of mac fn+backspace delete key
+				self.clearCanvas();
+				self.disable();
+				self.enable();
+			} else if (e.keyCode === 27) { //Esc key code
+				self.disable();
+				self.enable();
+			}
+		});
+		$(document).keyup(function(e) {
+			if (!self.cuted) {
+				return
+			}
+			if (ctrlKey && e.keyCode === 17) {
+				ctrlKey = false;
+			}
+		});
+	})();
 
 	$("#rotationSlider").slider({
 		min: -360,

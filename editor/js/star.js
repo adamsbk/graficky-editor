@@ -68,8 +68,8 @@ var Star = function(context, redrawerCtx) {
         self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
         self.ctx.lineWidth = self.penWidth;
         self.reCtx.lineWidth = self.penWidth;
-        self.ctx.lineCap = "round";
-        self.reCtx.lineCap = "round";
+        self.ctx.lineCap = "butt";
+        self.reCtx.lineCap = "butt";
     };
 
     self.dragStart = function(e) {

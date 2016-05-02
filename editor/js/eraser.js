@@ -1,8 +1,8 @@
-var Pen = function(context) {
-	var self = AbstractTool(context);
+var Eraser = function(context, redrawerCtx) {
+	var self = AbstractTool(context, redrawerCtx);
 
-	self.attrs = ['lineColorPicker', 'penWidthSlider'];
-	self.name = 'Pero';
+	self.attrs = ['penWidthSlider'];
+	self.name = 'Guma';
 
 	var prevEvt = null;
 	var interPoint = {x: null, y: null};
@@ -21,6 +21,14 @@ var Pen = function(context) {
 		self.ctx.stroke();
 	};
 
+	var repaint = function(e) {
+		self.clearCanvas();
+		self.reCtx.beginPath();
+		var radius = self.penWidth/2;
+		self.reCtx.arc(e.calcX, e.calcY, radius, 0, 2 * Math.PI, false);
+		self.reCtx.stroke();
+	};
+
 	var paintPoint = function(e) {
 		self.ctx.beginPath();
 		self.ctx.moveTo(e.calcX, e.calcY);
@@ -33,17 +41,19 @@ var Pen = function(context) {
 		self.ctx.lineWidth = self.penWidth;
 	};
 
-	self.lineColorChanged = function(color) {
-		self.lineColor = color;
-		self.ctx.strokeStyle = self.lineColor;
-		self.ctx.fillStyle = self.lineColor;
-	};
-
 	self.enable = function() {
-		self.ctx.strokeStyle = self.lineColor;
-		self.ctx.fillStyle = self.lineColor;
+		self.ctx.globalCompositeOperation="destination-out";
 		self.ctx.lineWidth = self.penWidth;
 		self.ctx.lineCap = "round";
+		self.reCtx.strokeStyle = '#aaa';
+		self.reCtx.lineWidth = 1;
+		$('#listen-events').addClass('eraser');
+	};
+
+	self.disable = function() {
+		self.clearCanvas();
+		self.ctx.globalCompositeOperation="source-over";
+		$('#listen-events').removeClass('eraser');
 	};
 
 	self.dragStart = function(e) {
@@ -54,6 +64,14 @@ var Pen = function(context) {
 	self.drag = function(e) {
 		paint(e);
 		prevEvt = e;
+	};
+
+	self.mouseMove = function(e) {
+		repaint(e);
+	};
+
+	self.mouseLeave = function(e) {
+		self.clearCanvas();
 	};
 
 	self.dragEnd = function(e) {
