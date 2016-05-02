@@ -70,6 +70,13 @@ var Star = function(context, redrawerCtx) {
         self.reCtx.lineWidth = self.penWidth;
         self.ctx.lineCap = "butt";
         self.reCtx.lineCap = "butt";
+        self.ctx.lineJoin = "miter";
+        self.reCtx.lineJoin = "miter";
+    };
+
+    self.disable = function() {
+        self.ctx.lineJoin = "bevel";
+        self.reCtx.lineJoin = "bevel";
     };
 
     self.dragStart = function(e) {
