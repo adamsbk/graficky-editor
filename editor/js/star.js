@@ -14,7 +14,7 @@ var Star = function(context, redrawerCtx) {
 
         context.beginPath();
         context.moveTo(cx, cy - outerRadius)
-        for (i = 0; i < spikes; i++) {
+        for (i = 0; i <= spikes; i++) {
             x = cx + Math.cos(rot) * outerRadius;
             y = cy + Math.sin(rot) * outerRadius;
             context.lineTo(x, y);
@@ -26,10 +26,9 @@ var Star = function(context, redrawerCtx) {
             rot += step;
         }
         context.lineTo(cx, cy - outerRadius);
-        context.closePath();
-        context.stroke();
+        //context.closePath();
         context.fill();
-
+        context.stroke();
     };
 
     var paint = function(e, context) {
@@ -68,15 +67,6 @@ var Star = function(context, redrawerCtx) {
         self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
         self.ctx.lineWidth = self.penWidth;
         self.reCtx.lineWidth = self.penWidth;
-        self.ctx.lineCap = "butt";
-        self.reCtx.lineCap = "butt";
-        self.ctx.lineJoin = "miter";
-        self.reCtx.lineJoin = "miter";
-    };
-
-    self.disable = function() {
-        self.ctx.lineJoin = "bevel";
-        self.reCtx.lineJoin = "bevel";
     };
 
     self.dragStart = function(e) {
