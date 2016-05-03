@@ -21,6 +21,7 @@ body{
     top: 0;
     border: 1px solid #000;
     box-shadow: 0 0 0 1024px #ddd;
+    overflow: hidden;
 }
 #saveImage {
     display: none;
@@ -58,7 +59,7 @@ body{
     padding: 0.25em;
     margin-right: 0.25em;
     background-color: #ECECEC;
-    border: medium solid #CCC;
+    border: 2px solid #CCC;
     border-radius: 4px;
     font-size: 2em;
     cursor: pointer;
@@ -96,6 +97,8 @@ body{
     position: absolute;
     border: 1px dashed #aaa;
     cursor: move;
+    left: 0;
+    top: 0;
 }
 
 #cutout-scale {
@@ -185,7 +188,7 @@ body{
     font-size: 2em;
     height: 2em;
     background-color: #ECECEC;
-    border: medium solid #CCC;
+    border: 2px solid #CCC;
     border-radius: 4px;
 }
 .sp-replacer > .sp-preview {
@@ -205,9 +208,10 @@ body{
     max-height: 240px;
     overflow: scroll;*/
     background-color: #ECECEC;
-    border: medium solid #CCC;
-    //display: none;
+    border: 2px solid #CCC;
     padding: 5px;
+    left: -2px;
+	margin-top: 5px;
 }
 
 #seal_images img{
@@ -216,4 +220,5 @@ body{
     height: 60px;
     margin-left: 5px;
     margin-top: 5px;
+    object-fit: contain;
 }

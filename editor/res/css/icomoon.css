@@ -27,6 +27,9 @@
 .icon-eraser:before {
     content: "\e908";
 }
+.icon-images:before {
+    content: "\e90a";
+}
 .icon-file-empty:before {
     content: "\e909";
 }

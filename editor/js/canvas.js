@@ -68,7 +68,19 @@ $(document).on('click', '.imageChoosed', function (e) {
 
 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
 
+var prevPos = {left: 0, top: 0};
 $("#resizable-layer").resizable({
     containment: ".canvas-layers",
-    handles: "all"
+    handles: "all",
+    resize: function(event, ui) {
+        if (ToolManager.selectedTool === ToolManager.tools.cutout) {
+            var cutoutUi = $('#cutout-ui');
+            cutoutUi.css({
+                'left': (parseInt(cutoutUi.css('left')) - ui.position.left + prevPos.left) + 'px',
+                'top': (parseInt(cutoutUi.css('top')) - ui.position.top + prevPos.top) + 'px',
+            });
+            prevPos.left = ui.position.left;
+            prevPos.top = ui.position.top;
+        }
+    }
 });

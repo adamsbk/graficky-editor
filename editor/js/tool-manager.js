@@ -1,6 +1,6 @@
 var ToolManager = new function () {
     var self = this;
-    var tools = {
+    self.tools = {
 	pen: new Pen(Canvas.ctx),
 	line: new Line(Canvas.ctx, Canvas.redrawerCtx),
 	star: new Star(Canvas.ctx, Canvas.redrawerCtx),
@@ -11,7 +11,7 @@ var ToolManager = new function () {
 	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx),
 	seal: new Seal(Canvas.ctx, Canvas.redrawerCtx)
     };
-    this.selectedTool = tools['pen'];
+    this.selectedTool = self.tools['pen'];
 
     var addPosToEventObj = function (e) {
 	var rect = Canvas.canvas.getBoundingClientRect();
@@ -72,7 +72,7 @@ var ToolManager = new function () {
 	    self.selectedTool.disable();
 	}
 	
-	self.selectedTool = tools[$('#cutout').data("tool")];
+	self.selectedTool = self.tools[$('#cutout').data("tool")];
 	if (self.selectedTool.hasOwnProperty('enable')) {
 	    self.selectedTool.enable();
 	}
@@ -123,7 +123,7 @@ var ToolManager = new function () {
 	    self.selectedTool.disable();
 	}
 
-	self.selectedTool = tools[$(this).data("tool")];
+	self.selectedTool = self.tools[$(this).data("tool")];
 	if (self.selectedTool.hasOwnProperty('enable')) {
 	    self.selectedTool.enable();
 	}
