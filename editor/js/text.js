@@ -60,6 +60,7 @@ var Text = function(context, redrawerCtx) {
 		self.lineColor = color;
 		self.ctx.fillStyle = self.lineColor;
 		self.reCtx.fillStyle = self.addAlphaChannel(self.lineColor, 0.5);
+		repaint();
 	};
 
 	self.enable = function() {
@@ -69,7 +70,7 @@ var Text = function(context, redrawerCtx) {
 		ret = '';
 		self.ctx.fillStyle = self.lineColor;
 		self.reCtx.fillStyle = self.addAlphaChannel(self.lineColor, 0.5);
-		self.penWidthChanged(16);
+		self.penWidthChanged(self.penWidth);
 		self.reCtx.strokeStyle = '#000';
 		self.reCtx.lineWidth = 1;
 	};
@@ -99,19 +100,29 @@ var Text = function(context, redrawerCtx) {
 		if (pos.x===null || pos.y===null) {
 			return;
 		}
-		if (e.which < 32 && e.which !== 13 && e.which !== 8) {
+		if (e.which < 32 && e.which !== 13 && e.which !== 8 && e.keyCode !== 27) {
 			return;
 		}
-		if (e.which === 13) {
+		if (e.which === 13) { //enter
 			ret.push('');
-		} else if (e.which === 8) {
+		} else if (e.which === 8) { //backspace
 			if (ret[ret.length-1].length > 0) {
 				ret[ret.length-1] = ret[ret.length-1].slice(0, -1);
 			} else if (ret.length > 1) {
 				ret.pop();
 			}
+			e.preventDefault();
+		} else if (e.keyCode === 27) { //esc
+			console.log(e.keyCode);
+			if (timer) {
+				window.clearInterval(timer);
+				timer = null;
+				self.clearCanvas();
+			}
+			paint();
+			ret = [''];
 		} else {
-			if (e.which === 32) {
+			if (e.which === 32) { //space
 				e.preventDefault();
 			}
 			ret[ret.length-1] += String.fromCharCode(e.which);
