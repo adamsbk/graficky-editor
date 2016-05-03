@@ -25,43 +25,50 @@ function downloadCanvas(link, canvasId, filename) {
     var wwidth = parseInt(resizableLayer.css('width'));
     var hheight = parseInt(resizableLayer.css('height'));
     var newCanvas = $('#saveImage')
-                        .attr('width', wwidth)
-                        .attr('height', hheight);
+	    .attr('width', wwidth)
+	    .attr('height', hheight);
     var newCtx = newCanvas[0].getContext('2d');
     newCtx.drawImage(
-        Canvas.canvas,
-        -parseInt(resizableLayer.css('left')),
-        -parseInt(resizableLayer.css('top'))
-    );
-    link.href =   newCanvas[0].toDataURL();
+	    Canvas.canvas,
+	    -parseInt(resizableLayer.css('left')),
+	    -parseInt(resizableLayer.css('top'))
+	    );
+    link.href = newCanvas[0].toDataURL();
     link.download = filename;
 }
 
 $('#download').click(function () {
     if (ToolManager.selectedTool.hasOwnProperty('disable')) {
-        ToolManager.selectedTool.disable();
+	ToolManager.selectedTool.disable();
     }
     downloadCanvas(this, 'canvas', 'obrazok.png');
     if (ToolManager.selectedTool.hasOwnProperty('enable')) {
-        ToolManager.selectedTool.enable();
+	ToolManager.selectedTool.enable();
     }
 });
 
 $('#paper').click(function () {
     if (ToolManager.selectedTool.hasOwnProperty('disable')) {
-        ToolManager.selectedTool.disable();
+	ToolManager.selectedTool.disable();
     }
-    $(CONFIG.canvas_selector)[0].getContext('2d').clearRect(0,0, CONFIG.width, CONFIG.height);
-    $(CONFIG.redrawer_selector)[0].getContext('2d').clearRect(0,0,  CONFIG.width,  CONFIG.height);
-    
+    $(CONFIG.canvas_selector)[0].getContext('2d').clearRect(0, 0, CONFIG.width, CONFIG.height);
+    $(CONFIG.redrawer_selector)[0].getContext('2d').clearRect(0, 0, CONFIG.width, CONFIG.height);
+
     if (ToolManager.selectedTool.hasOwnProperty('enable')) {
-        ToolManager.selectedTool.enable();
+	ToolManager.selectedTool.enable();
+    }
+});
+
+$(document).on('click', '.imageChoosed', function (e) {
+    e.stopPropagation();
+    if (ToolManager.selectedTool.hasOwnProperty('drawImage')) {
+	ToolManager.selectedTool.drawImage($(this).attr('src'));
     }
 });
 
 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
 
-$( "#resizable-layer" ).resizable({
+$("#resizable-layer").resizable({
     containment: ".canvas-layers",
     handles: "all"
 });

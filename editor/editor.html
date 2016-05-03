@@ -6,56 +6,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
 	<link rel="stylesheet" href="res/css/icomoon.css">
 	<link rel="stylesheet" href="res/css/custom.css">
-    <style>
-	body{
-	    background-color: #ddd;
-	}
-	
-	.canvas-wrap {
-		margin: 12px auto;
-	}
-	.canvas-layers {
-		position: relative;
-		width: 1024px;
-		height: 640px;
-		overflow: hidden;
-		margin-left: auto;
-		margin-right: auto;
-		background-color: #fff;
-	}
-	#resizable-layer {
-		width: 1024px;
-		height: 640px;
-		left: 0;
-		top: 0;
-		border: 1px solid #000;
-		box-shadow: 0 0 0 1024px #ddd;
-	}
-	#saveImage {
-		display: none;
-	}
-	.canvas-wrap canvas, #listen-events {
-		position: absolute;
-	    left: 0;
-	    top: 0;
-	    width: 1024px;
-	    height: 640px;
-	}
-	#listen-events {
-		cursor: url(res/img/barretr-Pencil-32px.png) 0 31, auto;
-		margin-top: -1px;
-		margin-left: -1px;
-		overflow: hidden;
-	}
-	#listen-events.eraser {
-		cursor: url(res/img/barretr-Eraser-32px.png) 0 31, auto;
-	}
-	
-	#transformations{
-	    display: none;
-	}
-	
-    </style>
 </head>
 <body>
 	<div id="editor-tools" class="clearfix">
@@ -68,6 +18,10 @@
 		<div class="tool" id="text" data-tool="text" data-toggle="tooltip" title="Text: do grafickej plochy sa dá písať. Kliknutím do plochy sa zobrazí kurzor a môže sa začať písať."><span class="icon-text"></span><span class="sr-only">Text</span></div>
 		<div class="tool active" id="eraser" data-tool="eraser" data-toggle="tooltip" title="Guma: gumuje zvolenou hrúbkou čiary"><span class="icon-eraser"></span><span class="sr-only">Guma</span></div>
 		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, vloženie(ctrl+v), mazanie(delete), zrušenie výberu(esc)"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
+		<div class="tool dropdown dropdown-toggle" id="seal" data-tool="seal" data-toggle="tooltip" title="Pečiatka: výber obrázkov"><span class="icon-scissors"></span><span class="sr-only">Pečiatka</span>
+		    <div class="dropdown-menu" id="seal_images"></div>
+		</div>
+		
 
 		<a class="option" id="download" href="#" data-toggle="tooltip" title="Uložiť vo formáte PNG"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
 
@@ -119,6 +73,7 @@
     <script type="text/javascript" src="js/eraser.js"></script>
     <script type="text/javascript" src="js/cutout.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
+    <script type="text/javascript" src="js/seal.js"></script>
     <script type="text/javascript" src="js/tool-manager.js"></script>
 </body>
 </html>

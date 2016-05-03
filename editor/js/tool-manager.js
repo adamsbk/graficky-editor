@@ -8,7 +8,8 @@ var ToolManager = new function () {
 	ellipse: new Ellipse(Canvas.ctx, Canvas.redrawerCtx),
 	text: new Text(Canvas.ctx, Canvas.redrawerCtx),
 	eraser: new Eraser(Canvas.ctx, Canvas.redrawerCtx),
-	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx)
+	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx),
+	seal: new Seal(Canvas.ctx, Canvas.redrawerCtx)
     };
     this.selectedTool = tools['pen'];
 
@@ -38,6 +39,7 @@ var ToolManager = new function () {
 		    break;
 		case 'scalingSlider':
 		    $('#scalingSlider').slider("value", self.selectedTool.scale);
+		    break;
 	    }
 	});
 	$('.tool-additions > .attr').addClass('hide');
@@ -61,39 +63,57 @@ var ToolManager = new function () {
 	    self.selectedTool.fillColorChanged(color);
 	}
     }
+    
+    self.switchToCutOut = function(width, height){
+	$("#editor-tools > .tool.active").removeClass('active');
+	$('#cutout').addClass('active');
+
+	if (self.selectedTool.hasOwnProperty('disable')) {
+	    self.selectedTool.disable();
+	}
+	
+	self.selectedTool = tools[$('#cutout').data("tool")];
+	if (self.selectedTool.hasOwnProperty('enable')) {
+	    self.selectedTool.enable();
+	}
+	if (self.selectedTool.hasOwnProperty('setImage')) {
+	    self.selectedTool.setImage(width, height);
+	}
+	setAttributes();
+    }
 
     var dragStart = false;
     $('#listen-events').mousedown(function (e) {
-    	dragStart = true;
-    	if (self.selectedTool.hasOwnProperty('dragStart')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.dragStart(e);
-    	}
+	dragStart = true;
+	if (self.selectedTool.hasOwnProperty('dragStart')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.dragStart(e);
+	}
     }).mousemove(function (e) {
-    	if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.drag(e);
-    	}
-    	if (self.selectedTool.hasOwnProperty('mouseMove')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.mouseMove(e);
-    	}
+	if (dragStart && self.selectedTool.hasOwnProperty('drag')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.drag(e);
+	}
+	if (self.selectedTool.hasOwnProperty('mouseMove')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.mouseMove(e);
+	}
     }).mouseup(function (e) {
-    	dragStart = false;
-    	if (self.selectedTool.hasOwnProperty('dragEnd')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.dragEnd(e);
-    	}
+	dragStart = false;
+	if (self.selectedTool.hasOwnProperty('dragEnd')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.dragEnd(e);
+	}
     }).click(function (e) {
-    	if (self.selectedTool.hasOwnProperty('click')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.click(e);
-    	}
-    }).mouseleave(function(e) {
-    	if (self.selectedTool.hasOwnProperty('mouseLeave')) {
-    		addPosToEventObj(e);
-    		self.selectedTool.mouseLeave(e);
-    	}
+	if (self.selectedTool.hasOwnProperty('click')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.click(e);
+	}
+    }).mouseleave(function (e) {
+	if (self.selectedTool.hasOwnProperty('mouseLeave')) {
+	    addPosToEventObj(e);
+	    self.selectedTool.mouseLeave(e);
+	}
     });
     $("#editor-tools > .tool").click(function (e) {
 	$("#editor-tools > .tool.active").removeClass('active');
