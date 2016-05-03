@@ -22,9 +22,9 @@ var Ellipse = function (context, redrawerCtx) {
 		centerX - width / 2, centerY - height / 2,
 		centerX, centerY - height / 2);
 
-	context.closePath();
 	context.stroke();
 	context.fill();
+	context.closePath();
 
     };
 

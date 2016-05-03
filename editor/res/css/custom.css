@@ -135,3 +135,6 @@
 .sp-replacer > .sp-preview {
 	height: 42px;
 }
+.sp-input-container{
+    display: none;
+}

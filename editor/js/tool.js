@@ -19,9 +19,9 @@ function AbstractTool(context, redrawerCtx) {
 	    return;
 	}
 	if (!context) {
-	    tool.reCtx.clearRect(x || 0, y || 0, width || $(CONFIG.width)[0], height || $(CONFIG.height)[0]);
+	    tool.reCtx.clearRect(x || 0, y || 0, width || CONFIG.width, height || CONFIG.height);
 	} else {
-	    context.clearRect(x || 0, y || 0, width || $(CONFIG.width)[0], height || $(CONFIG.height)[0]);
+	    context.clearRect(x || 0, y || 0, width || CONFIG.width, height || CONFIG.height);
 	}
     };
 

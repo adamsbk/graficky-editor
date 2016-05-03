@@ -39,8 +39,8 @@ $('#paper').click(function () {
     if (ToolManager.selectedTool.hasOwnProperty('disable')) {
         ToolManager.selectedTool.disable();
     }
-    $(CONFIG.canvas_selector)[0].getContext('2d').clearRect(0,0,  $(CONFIG.width)[0],  $(CONFIG.height)[0]);
-    $(CONFIG.redrawer_selector)[0].getContext('2d').clearRect(0,0,  $(CONFIG.width)[0],  $(CONFIG.height)[0]);
+    $(CONFIG.canvas_selector)[0].getContext('2d').clearRect(0,0, CONFIG.width, CONFIG.height);
+    $(CONFIG.redrawer_selector)[0].getContext('2d').clearRect(0,0,  CONFIG.width,  CONFIG.height);
     
     if (ToolManager.selectedTool.hasOwnProperty('enable')) {
         ToolManager.selectedTool.enable();
