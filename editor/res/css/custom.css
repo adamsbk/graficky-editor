@@ -34,10 +34,14 @@
 	float: right;
 }
 
+.tool-additions .vcontainer > span {
+	display: block;
+}
+
 .vcontainer {
 	display: table-cell;
-	padding: 0.25em;
-	vertical-align: middle;
+	padding: 0.25em 0.75em;
+	vertical-align: top;
 }
 
 #cutout-ui {
@@ -105,7 +109,7 @@
 
 /*Slider*/
 #penWidthSlider, #rotationSlider, #scalingSlider {
-	width: 220px;
+	width: 200px;
 }
 /*Slider as wifi*/
 #penWidthSlider {
@@ -120,7 +124,7 @@
 	width: 0;
 	height: 0;
 	border-style: solid;
-	border-width: 25px 220px 25px 0;
+	border-width: 25px 200px 25px 0;
 	border-color: transparent #fefefe transparent transparent;
 }
 #penWidthSlider .ui-slider-handle {

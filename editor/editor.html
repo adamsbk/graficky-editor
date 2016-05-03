@@ -26,7 +26,9 @@
 	#resizable-layer {
 		width: 1024px;
 		height: 640px;
-		border: thin solid #000;
+		left: 0;
+		top: 0;
+		border: 1px solid #000;
 		box-shadow: 0 0 0 1024px #ddd;
 	}
 	#saveImage {
@@ -41,6 +43,8 @@
 	}
 	#listen-events {
 		cursor: url(res/img/barretr-Pencil-32px.png) 0 31, auto;
+		margin-top: -1px;
+		margin-left: -1px;
 		overflow: hidden;
 	}
 	#listen-events.eraser {
@@ -55,7 +59,7 @@
 </head>
 <body>
 	<div id="editor-tools" class="clearfix">
-		<a class="option" id="paper" href="#" data-toggle="tooltip" title="Nový papier: Zmaže celú plochu"><span class="icon-"></span><span class="sr-only">Nový papier</span></a>
+		<a class="option" id="paper" href="#" data-toggle="tooltip" title="Nový papier: Zmaže celú plochu"><span class="icon-file-empty"></span><span class="sr-only">Nový papier</span></a>
 		<div class="tool active" id="pen" data-tool="pen" data-toggle="tooltip" title="Pero: kreslí čiary voľnou rukou"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
 		<div class="tool" id="line" data-tool="line" data-toggle="tooltip" title="Čiara: kreslí úsečky"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
 		<div class="tool" id="rectangle" data-tool="rectangle" data-toggle="tooltip" title="Obdĺžnik: kreslí obdĺžnik"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
@@ -63,7 +67,7 @@
 		<div class="tool" id="ellipse" data-tool="ellipse" data-toggle="tooltip" title="Elipsa: kreslí elipsy"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
 		<div class="tool" id="text" data-tool="text" data-toggle="tooltip" title="Text: do grafickej plochy sa dá písať"><span class="icon-text"></span><span class="sr-only">Text</span></div>
 		<div class="tool active" id="eraser" data-tool="eraser" data-toggle="tooltip" title="Guma: gumuje zvolenou hrúbkou čiary"><span class="icon-eraser"></span><span class="sr-only">Guma</span></div>
-		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, kopírovanie a mazanie"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
+		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, vloženie(ctrl+v), mazanie(delete), zrušenie výberu(esc)"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
 
 		<a class="option" id="download" href="#" data-toggle="tooltip" title="Uložiť vo formáte PNG"><span class="icon-folder-download"></span><span class="sr-only">Stiahnuť ako obrázok</span></a>
 

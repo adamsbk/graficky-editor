@@ -14,6 +14,7 @@ var Cutout = function (context, redrawerCtx) {
 	self.image_width = 0,
 	self.image_height = 0;
 
+	var resizableElem = $('#resizable-layer');
 	var cutoutUi = $('#cutout-ui');
 	var isScaledByUi = false;
 	var halfDiagonalLength = 0;
@@ -86,8 +87,8 @@ var Cutout = function (context, redrawerCtx) {
 		if (!self.cuted) {
 			prevEvt = e;
 			cutoutUi.css({
-				'left': prevEvt.calcX,
-				'top': prevEvt.calcY
+				'left': prevEvt.calcX - parseInt(resizableElem.css('left')),
+				'top': prevEvt.calcY - parseInt(resizableElem.css('top'))
 			}).removeClass('hide');
 		} else if (isRotatedByUi) {
 			dragDropRotationPrev = e.calcX;
@@ -100,8 +101,8 @@ var Cutout = function (context, redrawerCtx) {
 			cutoutUi.css({
 				'width': Math.abs(e.calcX - prevEvt.calcX),
 				'height': Math.abs(e.calcY - prevEvt.calcY),
-				'left': Math.min(e.calcX, prevEvt.calcX),
-				'top': Math.min(e.calcY, prevEvt.calcY)
+				'left': Math.min(e.calcX, prevEvt.calcX) - parseInt(resizableElem.css('left')),
+				'top': Math.min(e.calcY, prevEvt.calcY) - parseInt(resizableElem.css('top'))
 			});
 		} else if (isScaledByUi) {
 			var currentDiagonalLength = Math.sqrt(
@@ -143,8 +144,8 @@ var Cutout = function (context, redrawerCtx) {
 			cutoutUi.css({
 				'width': self.image_width,
 				'height': self.image_height,
-				'left': prevEvt.calcX,
-				'top': prevEvt.calcY
+				'left': prevEvt.calcX - parseInt(resizableElem.css('left')),
+				'top': prevEvt.calcY - parseInt(resizableElem.css('top'))
 			});
 		} else if (isScaledByUi) {
 			isScaledByUi = false;
@@ -157,8 +158,8 @@ var Cutout = function (context, redrawerCtx) {
 			self.transX = e.calcX;
 			self.transY = e.calcY;
 			cutoutUi.css({
-				'left': e.calcX - self.image_width * self.scale/2,
-				'top': e.calcY - self.image_height * self.scale/2
+				'left': e.calcX - parseInt(resizableElem.css('left')) - self.image_width * self.scale/2,
+				'top': e.calcY - parseInt(resizableElem.css('top')) - self.image_height * self.scale/2
 			});
 			repaint();
 		}
