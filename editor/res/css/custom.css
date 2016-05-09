@@ -164,8 +164,11 @@ body{
 }
 
 /*Slider*/
-#penWidthSlider, #rotationSlider, #scalingSlider {
+#penWidthSlider {
     width: 180px;
+}
+#rotationSlider, #scalingSlider {
+    width: 150px;
 }
 /*Slider as wifi*/
 #penWidthSlider {
