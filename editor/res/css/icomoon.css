@@ -57,4 +57,7 @@
 .icon-pencil:before {
     content: "\e904";
 }
+.icon-undo:before {
+    content: "\e900";
+}
 
