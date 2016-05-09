@@ -123,6 +123,9 @@ var ToolManager = new function () {
 	    self.selectedTool.disable();
 	}
 
+	var ctx = $(CONFIG.canvas_selector)[0].getContext('2d');
+	var backCtx = $('#backUp')[0].getContext('2d');
+	backCtx.drawImage(ctx.canvas, 0, 0, CONFIG.width, CONFIG.height);
 	self.selectedTool = self.tools[$(this).data("tool")];
 	if (self.selectedTool.hasOwnProperty('enable')) {
 	    self.selectedTool.enable();

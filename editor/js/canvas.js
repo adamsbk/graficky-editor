@@ -59,6 +59,20 @@ $('#paper').click(function () {
     }
 });
 
+$('#back').click(function () {
+    if (ToolManager.selectedTool.hasOwnProperty('disable')) {
+	ToolManager.selectedTool.disable();
+    }
+
+    var ctx = $(CONFIG.canvas_selector)[0].getContext('2d');
+    var backCtx = $('#backUp')[0].getContext('2d');
+    ctx.clearRect(0, 0, CONFIG.width, CONFIG.height);
+    ctx.drawImage(backCtx.canvas, 0, 0, CONFIG.width, CONFIG.height);
+    if (ToolManager.selectedTool.hasOwnProperty('enable')) {
+	ToolManager.selectedTool.enable();
+    }
+});
+
 $(document).on('click', '.imageChoosed', function (e) {
     e.stopPropagation();
     if (ToolManager.selectedTool.hasOwnProperty('drawImage')) {
@@ -72,15 +86,15 @@ var prevPos = {left: 0, top: 0};
 $("#resizable-layer").resizable({
     containment: ".canvas-layers",
     handles: "all",
-    resize: function(event, ui) {
-        if (ToolManager.selectedTool === ToolManager.tools.cutout) {
-            var cutoutUi = $('#cutout-ui');
-            cutoutUi.css({
-                'left': (parseInt(cutoutUi.css('left')) - ui.position.left + prevPos.left) + 'px',
-                'top': (parseInt(cutoutUi.css('top')) - ui.position.top + prevPos.top) + 'px',
-            });
-            prevPos.left = ui.position.left;
-            prevPos.top = ui.position.top;
-        }
+    resize: function (event, ui) {
+	if (ToolManager.selectedTool === ToolManager.tools.cutout) {
+	    var cutoutUi = $('#cutout-ui');
+	    cutoutUi.css({
+		'left': (parseInt(cutoutUi.css('left')) - ui.position.left + prevPos.left) + 'px',
+		'top': (parseInt(cutoutUi.css('top')) - ui.position.top + prevPos.top) + 'px',
+	    });
+	    prevPos.left = ui.position.left;
+	    prevPos.top = ui.position.top;
+	}
     }
 });
