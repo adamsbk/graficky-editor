@@ -34,13 +34,13 @@ body{
     height: 640px;
 }
 #listen-events {
-    cursor: url(res/img/barretr-Pencil-32px.png) 0 31, auto;
+    cursor: url(../img/barretr-Pencil-32px.png) 0 31, auto;
     margin-top: -1px;
     margin-left: -1px;
     overflow: hidden;
 }
 #listen-events.eraser {
-    cursor: url(res/img/barretr-Eraser-32px.png) 0 31, auto;
+    cursor: url(../img/barretr-Eraser-32px.png) 0 31, auto;
 }
 
 #transformations{
