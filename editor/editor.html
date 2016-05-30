@@ -12,12 +12,13 @@
 		<a class="option" id="paper" href="#" data-toggle="tooltip" title="Nový papier: Zmaže celú plochu"><span class="icon-file-empty"></span><span class="sr-only">Nový papier</span></a>
 		<a class="option" id="back" href="#" data-toggle="tooltip" title="Krok späť"><span class="icon-undo"></span><span class="sr-only">Vrátiť späť</span></a>
 		<div class="tool active" id="pen" data-tool="pen" data-toggle="tooltip" title="Pero: kreslí čiary voľnou rukou"><span class="icon-pencil"></span><span class="sr-only">Pero</span></div>
+		<div class="tool" id="bucket" data-tool="bucket" data-toggle="tooltip" title="Plechovka: vyplní ohraničenú plochu farbou"><span class="icon-circle"></span><span class="sr-only">Plechovka</span></div>
 		<div class="tool" id="line" data-tool="line" data-toggle="tooltip" title="Čiara: kreslí úsečky"><span class="icon-line"></span><span class="sr-only">Čiara</span></div>
 		<div class="tool" id="rectangle" data-tool="rectangle" data-toggle="tooltip" title="Obdĺžnik: kreslí obdĺžnik"><span class="icon-rectangle"></span><span class="sr-only">Obdĺžnik</span></div>
 		<div class="tool" id="star" data-tool="star" data-toggle="tooltip" title="Hviezda: kreslí hviezdy"><span class="icon-star"></span><span class="sr-only">Hviezda</span></div>
 		<div class="tool" id="ellipse" data-tool="ellipse" data-toggle="tooltip" title="Elipsa: kreslí elipsy"><span class="icon-circle"></span><span class="sr-only">Elipsa</span></div>
 		<div class="tool" id="text" data-tool="text" data-toggle="tooltip" title="Text: do grafickej plochy sa dá písať. Kliknutím do plochy sa zobrazí kurzor a môže sa začať písať."><span class="icon-text"></span><span class="sr-only">Text</span></div>
-		<div class="tool active" id="eraser" data-tool="eraser" data-toggle="tooltip" title="Guma: gumuje zvolenou hrúbkou čiary"><span class="icon-eraser"></span><span class="sr-only">Guma</span></div>
+		<div class="tool" id="eraser" data-tool="eraser" data-toggle="tooltip" title="Guma: gumuje zvolenou hrúbkou čiary"><span class="icon-eraser"></span><span class="sr-only">Guma</span></div>
 		<div class="tool" id="cutout" data-tool="cutout" data-toggle="tooltip" title="Výrez: otáčanie, posúvanie, škálovanie výrezu, vloženie(ctrl+v), mazanie(delete), zrušenie výberu(esc)"><span class="icon-scissors"></span><span class="sr-only">Výrez</span></div>
 		<div class="tool dropdown dropdown-toggle" id="seal" data-tool="seal" data-toggle="tooltip" title="Pečiatka: výber obrázkov"><span class="icon-images"></span><span class="sr-only">Pečiatka</span> <span class="caret"></span>
 		    <div class="dropdown-menu" id="seal_images" aria-labelledby="seal"></div>
@@ -74,6 +75,7 @@
     <script type="text/javascript" src="js/cutout.js"></script>
     <script type="text/javascript" src="js/canvas.js"></script>
     <script type="text/javascript" src="js/seal.js"></script>
+    <script type="text/javascript" src="js/bucket.js"></script>
     <script type="text/javascript" src="js/tool-manager.js"></script>
 </body>
 </html>

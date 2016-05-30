@@ -9,7 +9,8 @@ var ToolManager = new function () {
 	text: new Text(Canvas.ctx, Canvas.redrawerCtx),
 	eraser: new Eraser(Canvas.ctx, Canvas.redrawerCtx),
 	cutout: new Cutout(Canvas.ctx, Canvas.redrawerCtx),
-	seal: new Seal(Canvas.ctx, Canvas.redrawerCtx)
+	seal: new Seal(Canvas.ctx, Canvas.redrawerCtx),
+	bucket: new Bucket(Canvas.ctx, Canvas.redrawerCtx)
     };
     this.selectedTool = self.tools['pen'];
 
