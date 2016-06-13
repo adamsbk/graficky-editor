@@ -61,7 +61,7 @@ var Bucket = function (context, redrawerCtx) {
 
     var paint = function (e) {
 	imgData = self.ctx.getImageData(0, 0, CONFIG.width, CONFIG.height);
-	var pos = {X: e.calcX, Y: e.calcY};
+	var pos = {X: parseInt(e.calcX), Y: parseInt(e.calcY)};
 	var imgDat = self.ctx.getImageData(pos.X, pos.Y, 1, 1);
 	self.ctx.fillStyle = self.addAlphaChannel(self.fillColor, 1);
 	stack.push(pos);
