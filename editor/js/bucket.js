@@ -6,45 +6,67 @@ var Bucket = function (context, redrawerCtx) {
 
     var prevEvt = null;
 
-    function matchColor(pos, r, g, b)
+    var stack = [];
+    var visited = new Array(CONFIG.width);
+    for (var i = 0; i < CONFIG.width; i++) {
+	visited[i] = new Array(CONFIG.height);
+    }
+    var imgData;
+    
+    function matchColor(pos, r, g, b, a)
     {
-	var imgData = self.ctx.getImageData(pos.X, pos.Y, 1, 1);
 	//console.log(r, g, b);
 	//console.log(pos.X, pos.Y);
 	//console.log(imgData.data[0], imgData.data[1], imgData.data[2]);
-
-	return (imgData.data[0] === r && imgData.data[1] === g && imgData.data[2] === b);
+	var index = (CONFIG.width * pos.Y + pos.X) * 4;
+	return (imgData.data[index] === r && imgData.data[index + 1] === g && imgData.data[index + 2] === b && imgData.data[index + 3] === a);
     }
 
-    function fillPixel(pos, r, g, b) {
-	if (matchColor(pos, r, g, b)) {
-	    //console.log(ncolor);
-	    //console.log(pos.X, pos.Y);
+    function fillPixel(r, g, b, a) {
+	while (stack.length) {
+	    var pos = stack.pop();
 	    self.ctx.fillRect(pos.X, pos.Y, 1, 1);
-	    if (pos.X - 1 >= 0) {
-		if (pos.Y - 1 >= 0) {
-		    fillPixel({X: pos.X - 1,Y:pos.Y - 1}, r, g, b);
+	    if (matchColor(pos, r, g, b, a)) {
+		if (pos.X - 1 >= 0) {
+		    if (pos.Y - 1 >= 0) {
+			if (!visited[pos.X - 1][pos.Y - 1]) {
+			    stack.push({X: pos.X - 1, Y: pos.Y - 1});
+			    visited[pos.X - 1][pos.Y - 1] = true;
+			}
+		    }
+		    if (pos.Y + 1 < CONFIG.height) {
+			if (!visited[pos.X - 1][pos.Y + 1]) {
+			    stack.push({X: pos.X - 1, Y: pos.Y + 1});
+			    visited[pos.X - 1][pos.Y + 1] = true;
+			}
+		    }
 		}
-		if (pos.Y + 1 < CONFIG.height) {
-		    fillPixel({X: pos.X - 1,Y:pos.Y + 1}, r, g, b);
-		}
-	    }
-	    if (pos.X + 1 < CONFIG.width) {
-		if (pos.Y - 1 >= 0) {
-		    fillPixel({X: pos.X + 1,Y:pos.Y - 1}, r, g, b);
-		}
-		if (pos.Y + 1 < CONFIG.height) {
-		    fillPixel({X: pos.X + 1,Y:pos.Y + 1}, r, g, b);
+		if (pos.X + 1 < CONFIG.width) {
+		    if (pos.Y - 1 >= 0) {
+			if (!visited[pos.X + 1][pos.Y - 1]) {
+			    stack.push({X: pos.X + 1, Y: pos.Y - 1});
+			    visited[pos.X + 1][pos.Y - 1] = true;
+			}
+		    }
+		    if (pos.Y + 1 < CONFIG.height) {
+			if (!visited[pos.X + 1][pos.Y + 1]) {
+			    stack.push({X: pos.X + 1, Y: pos.Y + 1});
+			    visited[pos.X + 1][pos.Y + 1] = true;
+			}
+		    }
 		}
 	    }
 	}
     }
 
     var paint = function (e) {
+	imgData = self.ctx.getImageData(0, 0, CONFIG.width, CONFIG.height);
 	var pos = {X: e.calcX, Y: e.calcY};
-	var imgData = self.ctx.getImageData(pos.X, pos.Y, 1, 1);
+	var imgDat = self.ctx.getImageData(pos.X, pos.Y, 1, 1);
 	self.ctx.fillStyle = self.addAlphaChannel(self.fillColor, 1);
-	fillPixel(pos, imgData.data[0], imgData.data[1], imgData.data[2]);
+	stack.push(pos);
+	visited[pos.X][pos.Y] = true;
+	fillPixel(imgDat.data[0], imgDat.data[1], imgDat.data[2], imgDat.data[3]);
     };
 
     self.fillColorChanged = function (color) {
