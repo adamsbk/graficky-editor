@@ -7,88 +7,77 @@ var Bucket = function (context, redrawerCtx) {
     var prevEvt = null;
 
     var stack = [];
-    var visited = new Array(CONFIG.width);
-    for (var i = 0; i < CONFIG.width; i++) {
-	visited[i] = new Array(CONFIG.height);
-    }
+    var visited = null;
     var imgData;
     
-    function matchColor(pos, r, g, b, a)
+    function matchColor(index, r, g, b, a)
     {
-	//console.log(r, g, b);
 	//console.log(pos.X, pos.Y);
-	//console.log(imgData.data[0], imgData.data[1], imgData.data[2]);
-	var index = (CONFIG.width * pos.Y + pos.X) * 4;
-	return (imgData.data[index] === r && imgData.data[index + 1] === g && imgData.data[index + 2] === b && imgData.data[index + 3] === a);
+	return (imgData.data[index] === r && imgData.data[index + 1] === g && imgData.data[index + 2] === b && (imgData.data[index+3] === a || (a===0 && imgData.data[index+3] < 192 || a===255 && imgData.data[index+3] >= 192)));
     }
 
     function fillPixel(r, g, b, a) {
 	while (stack.length) {
 	    var pos = stack.pop();
-	    self.ctx.fillRect(pos.X, pos.Y, 1, 1);
-	    if (matchColor(pos, r, g, b, a)) {
-		if (pos.X - 1 >= 0) {
-		    if (pos.Y - 1 >= 0) {
-			if (!visited[pos.X - 1][pos.Y - 1]) {
-			    stack.push({X: pos.X - 1, Y: pos.Y - 1});
-			    visited[pos.X - 1][pos.Y - 1] = true;
-			}
-		    }
-		    if (pos.Y + 1 < CONFIG.height) {
-			if (!visited[pos.X - 1][pos.Y + 1]) {
-			    stack.push({X: pos.X - 1, Y: pos.Y + 1});
-			    visited[pos.X - 1][pos.Y + 1] = true;
-			}
-		    }
-		}
-		if (pos.X + 1 < CONFIG.width) {
-		    if (pos.Y - 1 >= 0) {
-			if (!visited[pos.X + 1][pos.Y - 1]) {
-			    stack.push({X: pos.X + 1, Y: pos.Y - 1});
-			    visited[pos.X + 1][pos.Y - 1] = true;
-			}
-		    }
-		    if (pos.Y + 1 < CONFIG.height) {
-			if (!visited[pos.X + 1][pos.Y + 1]) {
-			    stack.push({X: pos.X + 1, Y: pos.Y + 1});
-			    visited[pos.X + 1][pos.Y + 1] = true;
-			}
+	    if (!visited[pos.X][pos.Y]) {
+
+		    var pixelPos = (pos.Y * CONFIG.width + pos.X) * 4;
+		    //self.ctx.fillRect(pos.X, pos.Y, 1, 1);
+		    if (matchColor(pixelPos, r, g, b, a)) {
+		    	paintPixel(pixelPos);
+		    	visited[pos.X][pos.Y] = true;
+
+			    if (pos.Y - 1 >= 0) {
+				    stack.push({X: pos.X, Y: pos.Y - 1});
+			    }
+			    if (pos.Y + 1 < CONFIG.height) {
+				    stack.push({X: pos.X, Y: pos.Y + 1});
+			    }
+			    if (pos.X - 1 >= 0) {
+				    stack.push({X: pos.X - 1, Y: pos.Y});
+			    }
+			    if (pos.X + 1 < CONFIG.width) {
+				    stack.push({X: pos.X + 1, Y: pos.Y});
+			    }
 		    }
 		}
-	    }
 	}
     }
 
+    var paintPixel = function(pixelPos) {
+    	imgData.data[pixelPos] = self.fillColor.r;
+		imgData.data[pixelPos+1] = self.fillColor.g;
+		imgData.data[pixelPos+2] = self.fillColor.b;
+		imgData.data[pixelPos+3] = 255;
+    };
+
     var paint = function (e) {
+    visited = new Array(CONFIG.width);
+	    for (var i = 0; i < CONFIG.width; i++) {
+		visited[i] = new Array(CONFIG.height);
+	}
+
 	imgData = self.ctx.getImageData(0, 0, CONFIG.width, CONFIG.height);
 	var pos = {X: parseInt(e.calcX), Y: parseInt(e.calcY)};
-	var imgDat = self.ctx.getImageData(pos.X, pos.Y, 1, 1);
-	self.ctx.fillStyle = self.addAlphaChannel(self.fillColor, 1);
 	stack.push(pos);
-	visited[pos.X][pos.Y] = true;
-	fillPixel(imgDat.data[0], imgDat.data[1], imgDat.data[2], imgDat.data[3]);
+	var pixelPos = (pos.Y * CONFIG.width + pos.X) * 4;
+	fillPixel(imgData.data[pixelPos], imgData.data[pixelPos+1], imgData.data[pixelPos+2], imgData.data[pixelPos+3]);
+	self.ctx.putImageData(imgData, 0, 0);
     };
 
     self.fillColorChanged = function (color) {
-	self.fillColor = color;
-	self.ctx.fillStyle = self.fillColor;
-	self.reCtx.fillStyle = self.addAlphaChannel(self.fillColor, 0.5);
+    	var spectr = $("#fillColorPicker").spectrum("get");
+    	self.fillColor = spectr.toRgb();
     };
 
     self.enable = function () {
+    	var spectr = $("#fillColorPicker").spectrum("get");
+    	self.fillColor = spectr.toRgb();
+    	self.fillColor.a = spectr.getAlpha();
     };
 
-
-
-    self.dragStart = function (e) {
-	prevEvt = e;
-    };
-
-    self.drag = function (e) {
-    };
-
-    self.dragEnd = function (e) {
-	paint(e);
+    self.click = function (e) {
+		paint(e);
     };
 
     return self;
